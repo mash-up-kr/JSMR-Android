@@ -11,6 +11,7 @@
 /.idea/gradle.xml
 /.idea/misc.xml
 /.idea/vcs.xml
+/.idea/.gitignore
 .DS_Store
 /build
 /captures
