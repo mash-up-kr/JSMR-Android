@@ -13,8 +13,9 @@ val Grey700 = Color(0xFF3D3D3D)
 val Grey800 = Color(0xFF242424)
 val Black = Color(0xFF000000)
 
-val Main100 = Color(0xFFF76159)
-
+val Main100 = Color(0xFFFFD5D2)
+val Main200 = Color(0xFFFFA19C)
+val Main300 = Color(0xFFF76159)
 
 val SubBlue = Color(0xFF3E6FEE)
 val SubPurple = Color(0xFF934BEF)
