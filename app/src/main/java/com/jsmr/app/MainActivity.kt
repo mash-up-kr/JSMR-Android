@@ -1,4 +1,4 @@
-package com.crypto.jsmr
+package com.jsmr.app
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
