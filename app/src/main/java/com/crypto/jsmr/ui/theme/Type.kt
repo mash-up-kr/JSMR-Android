@@ -47,7 +47,7 @@ val Typography = Typography(
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp
     ),
-    caption =TextStyle(
+    caption = TextStyle(
         fontFamily = FontFamily.SansSerif,
         fontWeight = FontWeight.Normal,
         fontSize = 12.sp
