@@ -41,7 +41,7 @@ fun LoginScreen(viewModel: LoginViewModel = hiltViewModel()) {
 
                 Button(modifier = Modifier.padding(bottom = 78.dp), onClick = {
                     if (UserApiClient.instance.isKakaoTalkLoginAvailable(context)) {
-                        UserApiClient.instance.certLoginWithKakaoTalk(
+                        UserApiClient.instance.loginWithKakaoTalk(
                             context = context,
                             callback = { token, error ->
                             }
