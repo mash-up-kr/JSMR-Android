@@ -1,4 +1,4 @@
-package com.jsmr.app
+package com.marryting.app
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

@@ -1,4 +1,4 @@
-package com.jsmr.app
+package com.marryting.app
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

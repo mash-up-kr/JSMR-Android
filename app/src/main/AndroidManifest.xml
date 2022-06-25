@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jsmr.app">
+    package="com.marryting.app">
 
     <application
-        android:name=".MarrytingApp"
+        android:name="com.marryting.app.MarrytingApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.JSMR">
+        android:supportsRtl="true">
         <activity
-            android:name="com.jsmr.app.MainActivity"
+            android:name="com.marryting.app.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
