@@ -1,4 +1,4 @@
-package com.crypto.jsmr.ui.theme
+package com.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

@@ -1,4 +1,4 @@
-package com.crypto.jsmr.ui.theme
+package com.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
