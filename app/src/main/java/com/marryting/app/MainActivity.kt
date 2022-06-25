@@ -14,7 +14,6 @@ import com.marryting.app.presentation.LoginScreen
 
 class MainActivity : AppCompatActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
