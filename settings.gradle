@@ -13,5 +13,5 @@ dependencyResolutionManagement {
         maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
     }
 }
-rootProject.name = "JSMR"
+rootProject.name = "Marryting"
 include ':app'
