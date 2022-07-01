@@ -2,26 +2,44 @@ package com.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val White = Color(0xFFFFFFFF)
-val Grey100 = Color(0xFFDFDFDF)
-val Grey200 = Color(0xFFC1C1C1)
-val Grey300 = Color(0xFFA5A5A5)
-val Grey400 = Color(0xFF8B8B8B)
-val Grey500 = Color(0xFF6F6F6F)
-val Grey600 = Color(0xFF555555)
-val Grey700 = Color(0xFF3D3D3D)
-val Grey800 = Color(0xFF242424)
-val Black = Color(0xFF000000)
+object Color {
+    val Black = Color(0xFF000000)
+    val White = Color(0xFFFFFFFF)
 
-val Main100 = Color(0xFFFFD5D2)
-val Main200 = Color(0xFFFFA19C)
-val Main300 = Color(0xFFF76159)
+    val Grey100 = getThemeStateColor(DarkColor.Grey100, LightColor.Grey100)
+    val Grey200 = getThemeStateColor(DarkColor.Grey200, LightColor.Grey200)
+    val Grey300 = getThemeStateColor(DarkColor.Grey300, LightColor.Grey300)
+    val Grey400 = getThemeStateColor(DarkColor.Grey400, LightColor.Grey400)
+    val Grey500 = getThemeStateColor(DarkColor.Grey500, LightColor.Grey500)
+    val Grey600 = getThemeStateColor(DarkColor.Grey600, LightColor.Grey600)
+    val Grey700 = getThemeStateColor(DarkColor.Grey700, LightColor.Grey700)
+    val Grey800 = getThemeStateColor(DarkColor.Grey800, LightColor.Grey800)
 
-val SubBlue = Color(0xFF3E6FEE)
-val SubPurple = Color(0xFF934BEF)
-val SubGreen = Color(0xFFB0E519)
-val SubYellow = Color(0xFFFFCD4D)
-val ErrorRed = Color(0xFFDF1D1D)
+    val Main100 = getThemeStateColor(DarkColor.Main100, LightColor.Main100)
+    val Main200 = getThemeStateColor(DarkColor.Main200, LightColor.Main200)
+    val Main300 = getThemeStateColor(DarkColor.Main300, LightColor.Main300)
 
-val DarkBackground = Color(0xFF242424)
-val LightBackground = Color(0xFFF7F7F7)
+    val SubBlue = getThemeStateColor(DarkColor.SubBlue, LightColor.SubBlue)
+    val SubPurple = getThemeStateColor(DarkColor.SubPurple, LightColor.SubPurple)
+    val SubGreen = getThemeStateColor(DarkColor.SubGreen, LightColor.SubGreen)
+    val SubYellow = getThemeStateColor(DarkColor.SubYellow, LightColor.SubYellow)
+    val ErrorRed = getThemeStateColor(DarkColor.ErrorRed, LightColor.ErrorRed)
+
+    val DarkBackground = Color(0xFF242424)
+    val LightBackground = Color(0xFFF7F7F7)
+
+    private fun getThemeStateColor(
+        darkColor: Color,
+        lightColor: Color
+    ): Color {
+        fun getDarkTheme(): Boolean {
+            return ThemeState.darkModeState.value
+        }
+
+        return if (getDarkTheme()) {
+            darkColor
+        } else {
+            lightColor
+        }
+    }
+}
