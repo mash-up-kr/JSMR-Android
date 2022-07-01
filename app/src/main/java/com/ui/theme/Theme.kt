@@ -10,6 +10,7 @@ fun MarrytingTheme(
     content: @Composable () -> Unit
 ) {
 
+    ThemeState.darkModeState.value = darkTheme
     MaterialTheme(
         typography = Typography,
         content = content
