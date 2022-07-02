@@ -26,9 +26,11 @@ fun MarrytingButton(
     buttonType: MarrytingButton,
     onClick: () -> Unit,
 ) {
-    Button(modifier = modifier,
+    Button(
+        modifier = modifier,
         colors = ButtonDefaults.buttonColors(containerColor = buttonType.backgroundAndArrowColor),
-        onClick = { onClick() }) {
+        onClick = { onClick() }
+    ) {
         if (buttonType is MarrytingButton.LeftArrow) {
             MarrytingButtonArrow(buttonType = buttonType)
         }
@@ -87,4 +89,3 @@ sealed class MarrytingButton(
         override val paddingValues: PaddingValues = PaddingValues(end = 22.dp)
     ) : MarrytingButton(textAndCircleColor, backgroundAndArrowColor, paddingValues)
 }
-

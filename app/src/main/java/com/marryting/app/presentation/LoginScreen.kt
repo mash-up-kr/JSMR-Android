@@ -38,9 +38,10 @@ fun LoginScreen(viewModel: LoginViewModel = hiltViewModel()) {
                 contentDescription = ""
             )
 
-            Button(modifier = Modifier
-                .padding(bottom = 78.dp)
-                .align(Alignment.BottomCenter),
+            Button(
+                modifier = Modifier
+                    .padding(bottom = 78.dp)
+                    .align(Alignment.BottomCenter),
                 onClick = {
                     if (UserApiClient.instance.isKakaoTalkLoginAvailable(context)) {
                         UserApiClient.instance.loginWithKakaoTalk(
@@ -55,7 +56,8 @@ fun LoginScreen(viewModel: LoginViewModel = hiltViewModel()) {
                             }
                         )
                     }
-                }) {
+                }
+            ) {
                 Text(text = "카카오톡으로 시작하기")
             }
         }
