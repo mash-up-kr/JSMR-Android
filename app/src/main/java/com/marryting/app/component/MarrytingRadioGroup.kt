@@ -28,18 +28,18 @@ import com.ui.theme.Color
 @Composable
 fun MarrytingRadioGroup(
     items: List<String> = emptyList(),
-    selectedItem: MutableState<String>,
+    selectedItem: String,
     itemSelected: (String) -> Unit
 ) {
     items.forEach { item ->
 
-        val selectedBorderColor = if (selectedItem.value == item) {
+        val selectedBorderColor = if (selectedItem == item) {
             Color.SubGreen
         } else {
             Color.Grey300
         }
 
-        val backgroundColor = if (selectedItem.value == item) {
+        val backgroundColor = if (selectedItem == item) {
             Color.SubGreen.copy(alpha = 0.16f)
         } else {
             Color.Grey600
@@ -53,7 +53,7 @@ fun MarrytingRadioGroup(
                 .background(backgroundColor, RoundedCornerShape(8.dp))
                 .selectable(
                     enabled = true,
-                    selected = item == selectedItem.value,
+                    selected = item == selectedItem,
                     role = Role.RadioButton,
                     onClick = {
                         itemSelected(item)
@@ -64,7 +64,7 @@ fun MarrytingRadioGroup(
 
                 Icon(
                     painter = painterResource(id = R.drawable.ic_radio_check_disabled),
-                    tint = if (selectedItem.value == item) {
+                    tint = if (selectedItem == item) {
                         Color.SubGreen
                     } else {
                         Color.Grey500
@@ -74,7 +74,7 @@ fun MarrytingRadioGroup(
                 Text(
                     modifier = Modifier.padding(start = 8.dp),
                     text = item,
-                    color = when (selectedItem.value) {
+                    color = when (selectedItem) {
                         item -> {
                             Color.White
                         }
@@ -88,7 +88,7 @@ fun MarrytingRadioGroup(
                     fontStyle = FontStyle.Normal,
                     fontSize = 16.sp,
                     fontFamily = FontFamily.SansSerif,
-                    fontWeight = if (selectedItem.value == item) {
+                    fontWeight = if (selectedItem == item) {
                         FontWeight.Bold
                     } else {
                         FontWeight.Normal
