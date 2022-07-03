@@ -23,15 +23,21 @@ import com.marryting.app.R
 fun MarrytingButton(
     modifier: Modifier = Modifier,
     text: String = "",
-    buttonType: MarrytingButton,
+    enabled: Boolean = false,
+    buttonType: MarrytingButtonType,
     onClick: () -> Unit,
 ) {
     Button(
         modifier = modifier,
-        colors = ButtonDefaults.buttonColors(containerColor = buttonType.backgroundAndArrowColor),
+        enabled = enabled,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = buttonType.backgroundAndArrowColor,
+            disabledContainerColor = Color.Grey300,
+            disabledContentColor = Color.Grey200
+        ),
         onClick = { onClick() }
     ) {
-        if (buttonType is MarrytingButton.LeftArrow) {
+        if (buttonType is MarrytingButtonType.LeftArrow) {
             MarrytingButtonArrow(buttonType = buttonType)
         }
 
@@ -41,7 +47,7 @@ fun MarrytingButton(
             color = buttonType.textAndCircleColor
         )
 
-        if (buttonType is MarrytingButton.RightArrow) {
+        if (buttonType is MarrytingButtonType.RightArrow) {
             MarrytingButtonArrow(buttonType = buttonType)
         }
     }
@@ -49,7 +55,7 @@ fun MarrytingButton(
 
 @Composable
 private fun MarrytingButtonArrow(
-    buttonType: MarrytingButton
+    buttonType: MarrytingButtonType
 ) {
     Box(
         modifier = Modifier
@@ -58,7 +64,7 @@ private fun MarrytingButtonArrow(
         contentAlignment = Alignment.Center
     ) {
 
-        val painter: Int = if (buttonType is MarrytingButton.LeftArrow) {
+        val painter: Int = if (buttonType is MarrytingButtonType.LeftArrow) {
             R.drawable.ic_arrow_left
         } else {
             R.drawable.ic_arrow_right
@@ -72,7 +78,7 @@ private fun MarrytingButtonArrow(
     }
 }
 
-sealed class MarrytingButton(
+sealed class MarrytingButtonType(
     open val textAndCircleColor: Color, // 텍스트, 원 동일
     open val backgroundAndArrowColor: Color, // 백그라운드 화살표 동일
     open val paddingValues: PaddingValues
@@ -81,11 +87,11 @@ sealed class MarrytingButton(
         override val textAndCircleColor: Color,
         override val backgroundAndArrowColor: Color,
         override val paddingValues: PaddingValues = PaddingValues(start = 22.dp)
-    ) : MarrytingButton(textAndCircleColor, backgroundAndArrowColor, paddingValues)
+    ) : MarrytingButtonType(textAndCircleColor, backgroundAndArrowColor, paddingValues)
 
     data class RightArrow(
         override val textAndCircleColor: Color,
         override val backgroundAndArrowColor: Color,
         override val paddingValues: PaddingValues = PaddingValues(end = 22.dp)
-    ) : MarrytingButton(textAndCircleColor, backgroundAndArrowColor, paddingValues)
+    ) : MarrytingButtonType(textAndCircleColor, backgroundAndArrowColor, paddingValues)
 }
