@@ -32,8 +32,8 @@ fun MarrytingButton(
         enabled = enabled,
         colors = ButtonDefaults.buttonColors(
             containerColor = buttonType.backgroundAndArrowColor,
-            disabledContainerColor = Color.Grey300,
-            disabledContentColor = Color.Grey200
+            disabledContainerColor = com.ui.theme.Color.Grey300,
+            disabledContentColor = com.ui.theme.Color.Grey200
         ),
         onClick = { onClick() }
     ) {
