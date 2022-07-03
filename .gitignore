@@ -236,3 +236,4 @@ fabric.properties
 
 # End of https://www.toptal.com/developers/gitignore/api/androidstudio,kotlin,windows,macos
 /.idea/kotlinScripting.xml
+/.idea/inspectionProfiles/Project_Default.xml
