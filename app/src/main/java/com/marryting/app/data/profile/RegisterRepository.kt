@@ -23,7 +23,7 @@ class RegisterRepository {
         ),
         Content(
             id = 3,
-            title = listOf("내가 쓰는\n나의 ", "성향"," 소개서"),
+            title = listOf("내가 쓰는\n나의 ", "성향", " 소개서"),
             description = "꼭 기억해서 맞춤 추천해드릴게요",
             contentViewType = null
         )

@@ -25,5 +25,5 @@ sealed class RegisterState {
 
     data class Result(
         val description: String? = ""
-    ): RegisterState()
+    ) : RegisterState()
 }

@@ -11,9 +11,9 @@ import kotlinx.coroutines.launch
 // @HiltViewModel
 class RegisterViewModel(
     private val registerRepository: RegisterRepository
-): ViewModel() {
+) : ViewModel() {
 
-    private val _uiState : MutableStateFlow<RegisterState> = MutableStateFlow(RegisterState.Loading)
+    private val _uiState: MutableStateFlow<RegisterState> = MutableStateFlow(RegisterState.Loading)
     val uiState: StateFlow<RegisterState>
         get() = _uiState.asStateFlow()
 
@@ -42,5 +42,4 @@ class RegisterViewModel(
     fun onDonePressed() {
         _uiState.value = RegisterState.Result(description = "done")
     }
-
 }

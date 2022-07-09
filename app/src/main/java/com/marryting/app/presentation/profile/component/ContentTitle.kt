@@ -32,7 +32,10 @@ fun ContentTitle(
     }
 }
 
-private fun AnnotatedString.Builder.setWithStyle(color : androidx.compose.ui.graphics.Color, title : String){
+private fun AnnotatedString.Builder.setWithStyle(
+    color: androidx.compose.ui.graphics.Color,
+    title: String
+) {
     fun getSpanStyle(color: androidx.compose.ui.graphics.Color): SpanStyle = SpanStyle(
         fontWeight = FontWeight.Bold,
         color = color,
@@ -41,7 +44,7 @@ private fun AnnotatedString.Builder.setWithStyle(color : androidx.compose.ui.gra
 
     withStyle(
         style = getSpanStyle(color)
-    ){
+    ) {
         append(title)
     }
 }
@@ -57,4 +60,3 @@ fun ContentDescription(
         color = LightColor.Grey300
     )
 }
-

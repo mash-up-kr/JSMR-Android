@@ -21,5 +21,4 @@ fun RegisterScreen(viewModel: RegisterViewModel = viewModel()) { // hiltViewMode
             }
         is RegisterState.Result -> RegisterResultScreen()
     }
-
 }

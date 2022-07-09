@@ -11,5 +11,5 @@ sealed interface ContentViewType {
     object Inputs : ContentViewType
     object Pictures : ContentViewType
     object Keywords : ContentViewType
-    object Answers: ContentViewType
+    object Answers : ContentViewType
 }
