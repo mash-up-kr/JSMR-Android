@@ -12,13 +12,10 @@ import com.ui.theme.Color
 fun RegisterScreen(viewModel: RegisterViewModel = viewModel()) { // hiltViewModel()로 변경해야 함
 
     when (val state = viewModel.uiState.collectAsState().value) {
-        is RegisterState.Contents ->
-            Surface(modifier = Modifier.background(Color.DarkBackground)) {
-                RegisterContentsScreen(
-                    contents = state,
-                    onDonePressed = { viewModel.onDonePressed() }
-                )
-            }
+        is RegisterState.Contents -> RegisterContentsScreen(
+            contents = state,
+            onDonePressed = { viewModel.onDonePressed() }
+        )
         is RegisterState.Result -> RegisterResultScreen()
     }
 }
