@@ -18,7 +18,9 @@ object LightColor {
 
     val SubBlue = Color(0xFF3E6FEE)
     val SubPurple = Color(0xFF934BEF)
-    val SubGreen = Color(0xFFB0E519)
-    val SubYellow = Color(0xFFFFCD4D)
+    val SubGreen100 = Color(0xFFB0E519)
+    val subGreen200 = Color(0xFF9FCD1A)
+    val subYellow100 = Color(0xFFFFCD4D)
+    val SubYellow200 = Color(0xFFFFAF36)
     val ErrorRed = Color(0xFFDF1D1D)
 }

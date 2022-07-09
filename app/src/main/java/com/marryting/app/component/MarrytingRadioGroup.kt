@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.marryting.app.R
 import com.ui.theme.Color
+import com.ui.theme.DarkColor
 
 @ExperimentalMaterial3Api
 @Composable
@@ -36,15 +37,15 @@ fun MarrytingRadioGroup(
         items.forEach { item ->
 
             val selectedBorderColor = if (selectedItem == item) {
-                Color.SubGreen
+                DarkColor.SubGreen
             } else {
-                Color.Grey300
+                DarkColor.Grey600
             }
 
             val backgroundColor = if (selectedItem == item) {
-                Color.SubGreen.copy(alpha = 0.16f)
+                DarkColor.SubGreen.copy(alpha = 0.16f)
             } else {
-                Color.Grey600
+                DarkColor.Grey800
             }
 
             Box(
@@ -67,9 +68,9 @@ fun MarrytingRadioGroup(
                     Icon(
                         painter = painterResource(id = R.drawable.ic_radio_check_disabled),
                         tint = if (selectedItem == item) {
-                            Color.SubGreen
+                            DarkColor.SubGreen
                         } else {
-                            Color.Grey500
+                            DarkColor.Grey400
                         },
                         contentDescription = ""
                     )
@@ -81,10 +82,10 @@ fun MarrytingRadioGroup(
                                 Color.White
                             }
                             "" -> {
-                                Color.Grey100
+                                DarkColor.Grey100
                             }
                             else -> {
-                                Color.Grey200
+                                DarkColor.Grey200
                             }
                         },
                         fontStyle = FontStyle.Normal,
