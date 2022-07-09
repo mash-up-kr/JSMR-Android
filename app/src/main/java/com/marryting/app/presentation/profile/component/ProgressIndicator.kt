@@ -1,4 +1,4 @@
-package com.marryting.app.presentation.profile
+package com.marryting.app.presentation.profile.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -17,14 +17,14 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun ProgressIndicator(
     modifier: Modifier = Modifier,
-    currentQuestionIndex: Int,
-    totalQuestionsCount: Int
+    currentContentIndex: Int,
+    totalContentsCount: Int
 ) {
     Row(
         modifier = modifier.fillMaxWidth()
     ) {
-        for (i in 0 until totalQuestionsCount) {
-            val backgroundColor = if (i <= currentQuestionIndex) {
+        for (i in 0 until totalContentsCount) {
+            val backgroundColor = if (i <= currentContentIndex) {
                 Color.White
             } else {
                 Color.Transparent
@@ -35,7 +35,7 @@ fun ProgressIndicator(
                     .size(8.dp)
                     .background(backgroundColor, CircleShape)
                     .then(
-                        if (currentQuestionIndex < i) {
+                        if (currentContentIndex < i) {
                             Modifier.border(1.dp, Color.White, CircleShape)
                         } else {
                             Modifier
