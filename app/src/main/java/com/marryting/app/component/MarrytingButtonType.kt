@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.marryting.app.R
+import com.ui.theme.DarkColor
 
 @Composable
 fun MarrytingButton(
@@ -32,8 +33,8 @@ fun MarrytingButton(
         enabled = enabled,
         colors = ButtonDefaults.buttonColors(
             containerColor = buttonType.backgroundAndArrowColor,
-            disabledContainerColor = com.ui.theme.Color.Grey300,
-            disabledContentColor = com.ui.theme.Color.Grey200
+            disabledContainerColor = DarkColor.Grey300,
+            disabledContentColor = DarkColor.Grey200
         ),
         onClick = { onClick() }
     ) {
