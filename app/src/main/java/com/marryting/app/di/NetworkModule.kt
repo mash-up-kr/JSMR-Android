@@ -1,4 +1,4 @@
-package com.marryting.app.data
+package com.marryting.app.di
 
 import dagger.Module
 import dagger.Provides
