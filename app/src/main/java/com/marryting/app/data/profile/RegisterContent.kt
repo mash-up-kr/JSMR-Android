@@ -1,6 +1,6 @@
 package com.marryting.app.data.profile
 
-data class Content(
+data class RegisterContent(
     val id: Int,
     val title: List<String>,
     val description: String,

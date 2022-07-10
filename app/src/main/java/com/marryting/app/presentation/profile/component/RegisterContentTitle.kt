@@ -15,7 +15,7 @@ import com.ui.theme.Color
 import com.ui.theme.LightColor
 
 @Composable
-fun ContentTitle(
+fun RegisterContentTitle(
     modifier: Modifier = Modifier,
     title: List<String>
 ) {
@@ -50,7 +50,7 @@ private fun AnnotatedString.Builder.setWithStyle(
 }
 
 @Composable
-fun ContentDescription(
+fun RegisterContentDescription(
     description: String
 ) {
     Text(

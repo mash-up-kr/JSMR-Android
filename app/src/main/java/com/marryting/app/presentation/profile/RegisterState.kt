@@ -3,10 +3,10 @@ package com.marryting.app.presentation.profile
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.marryting.app.data.profile.Content
+import com.marryting.app.data.profile.RegisterContent
 
-data class ContentState(
-    val content: Content,
+data class RegisterContentState(
+    val registerContent: RegisterContent,
     val totalContentsCount: Int,
     val showPrevious: Boolean,
     val showDone: Boolean
@@ -18,7 +18,7 @@ sealed class RegisterState {
     object Loading : RegisterState()
 
     data class Contents(
-        val contentsState: List<ContentState>
+        val registerContentsState: List<RegisterContentState>
     ) : RegisterState() {
         var currentContentIndex: Int by mutableStateOf(0)
     }

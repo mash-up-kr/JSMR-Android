@@ -17,8 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.marryting.app.component.MarrytingButton
 import com.marryting.app.component.MarrytingButtonType
-import com.marryting.app.presentation.profile.component.ContentDescription
-import com.marryting.app.presentation.profile.component.ContentTitle
+import com.marryting.app.presentation.profile.component.RegisterContentDescription
+import com.marryting.app.presentation.profile.component.RegisterContentTitle
 import com.marryting.app.presentation.profile.component.ProgressIndicator
 import com.ui.theme.Color
 
@@ -28,8 +28,8 @@ fun RegisterContentsScreen(
     contents: RegisterState.Contents,
     onDonePressed: () -> Unit
 ) {
-    val contentState = remember(contents.currentContentIndex) {
-        contents.contentsState[contents.currentContentIndex]
+    val currentContentState = remember(contents.currentContentIndex) {
+        contents.registerContentsState[contents.currentContentIndex]
     }
 
     Scaffold(
@@ -39,7 +39,7 @@ fun RegisterContentsScreen(
         containerColor = Color.DarkBackground,
         topBar = {
             RegisterTopBar(
-                contentState = contentState,
+                contentState = currentContentState,
                 currentContentIndex = contents.currentContentIndex
             )
         },
@@ -48,7 +48,7 @@ fun RegisterContentsScreen(
         },
         bottomBar = {
             RegisterBottomBar(
-                contentState = contentState,
+                contentState = currentContentState,
                 onPreviousPressed = { contents.currentContentIndex-- },
                 onNextPressed = { contents.currentContentIndex++ },
                 onDonePressed = onDonePressed
@@ -59,7 +59,7 @@ fun RegisterContentsScreen(
 
 @Composable
 private fun RegisterTopBar(
-    contentState: ContentState,
+    contentState: RegisterContentState,
     currentContentIndex: Int
 ) {
     Surface(
@@ -73,16 +73,16 @@ private fun RegisterTopBar(
             totalContentsCount = contentState.totalContentsCount
         )
         Column(modifier = Modifier.padding(top = 16.dp)) {
-            ContentTitle(title = contentState.content.title)
+            RegisterContentTitle(title = contentState.registerContent.title)
             Spacer(modifier = Modifier.padding(4.dp))
-            ContentDescription(description = contentState.content.description)
+            RegisterContentDescription(description = contentState.registerContent.description)
         }
     }
 }
 
 @Composable
 private fun RegisterBottomBar(
-    contentState: ContentState,
+    contentState: RegisterContentState,
     onPreviousPressed: () -> Unit,
     onNextPressed: () -> Unit,
     onDonePressed: () -> Unit

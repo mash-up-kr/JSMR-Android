@@ -19,17 +19,17 @@ class RegisterViewModel(
 
     init {
         viewModelScope.launch {
-            val registerContents = registerRepository.getContents()
+            val registerContents = registerRepository.getRegisterContents()
 
 //            val contentViewType = registerContents[0].contentViewType
 //            if (contentViewType is ContentViewType.Keywords){
 //            }
 
-            val contents: List<ContentState> = registerContents.mapIndexed { index, content ->
+            val contents: List<RegisterContentState> = registerContents.mapIndexed { index, content ->
                 val showPrevious = index > 0
                 val showDone = index == registerContents.size - 1
-                ContentState(
-                    content = content,
+                RegisterContentState(
+                    registerContent = content,
                     totalContentsCount = registerContents.size,
                     showPrevious = showPrevious,
                     showDone = showDone
