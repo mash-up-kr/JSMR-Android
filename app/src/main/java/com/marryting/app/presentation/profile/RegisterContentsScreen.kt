@@ -17,9 +17,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.marryting.app.component.MarrytingButton
 import com.marryting.app.component.MarrytingButtonType
+import com.marryting.app.presentation.profile.component.ProgressIndicator
 import com.marryting.app.presentation.profile.component.RegisterContentDescription
 import com.marryting.app.presentation.profile.component.RegisterContentTitle
-import com.marryting.app.presentation.profile.component.ProgressIndicator
 import com.ui.theme.Color
 import com.ui.theme.DarkColor
 
@@ -102,7 +102,9 @@ private fun RegisterBottomBar(
                     modifier = Modifier.padding(end = 22.dp),
                     text = "PREV",
                     enabled = true,
-                    buttonType = MarrytingButtonType.LeftArrow(DarkColor.Grey700, DarkColor.Grey200),
+                    buttonType = MarrytingButtonType.LeftArrow(
+                        DarkColor.Grey700, DarkColor.Grey200
+                    ),
                     onClick = onPreviousPressed
                 )
             }
@@ -111,7 +113,9 @@ private fun RegisterBottomBar(
                     modifier = Modifier.align(Alignment.CenterEnd),
                     text = "DONE",
                     enabled = contentState.enabledNext,
-                    buttonType = MarrytingButtonType.RightArrow(DarkColor.Grey800, DarkColor.SubGreen),
+                    buttonType = MarrytingButtonType.RightArrow(
+                        DarkColor.Grey800, DarkColor.SubGreen
+                    ),
                     onClick = onDonePressed
                 )
             } else {
@@ -119,7 +123,9 @@ private fun RegisterBottomBar(
                     modifier = Modifier.align(Alignment.CenterEnd),
                     text = "NEXT",
                     enabled = contentState.enabledNext,
-                    buttonType = MarrytingButtonType.RightArrow(DarkColor.Grey800, DarkColor.SubGreen),
+                    buttonType = MarrytingButtonType.RightArrow(
+                        DarkColor.Grey800, DarkColor.SubGreen
+                    ),
                     onClick = onNextPressed
                 )
             }

@@ -25,9 +25,9 @@ class RegisterViewModel(
 //            if (contentViewType is ContentViewType.Keywords){
 //            }
 
-            val contents: List<RegisterContentState> = registerContents.mapIndexed { index, content ->
-                val showPrevious = index > 0
-                val showDone = index == registerContents.size - 1
+            val contents: List<RegisterContentState> = registerContents.mapIndexed { idx, content ->
+                val showPrevious = idx > 0
+                val showDone = idx == registerContents.size - 1
                 RegisterContentState(
                     registerContent = content,
                     totalContentsCount = registerContents.size,
