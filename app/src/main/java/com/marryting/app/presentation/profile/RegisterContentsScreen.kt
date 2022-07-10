@@ -21,6 +21,7 @@ import com.marryting.app.presentation.profile.component.RegisterContentDescripti
 import com.marryting.app.presentation.profile.component.RegisterContentTitle
 import com.marryting.app.presentation.profile.component.ProgressIndicator
 import com.ui.theme.Color
+import com.ui.theme.DarkColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -101,7 +102,7 @@ private fun RegisterBottomBar(
                     modifier = Modifier.padding(end = 22.dp),
                     text = "PREV",
                     enabled = true,
-                    buttonType = MarrytingButtonType.LeftArrow(Color.Grey700, Color.Grey200),
+                    buttonType = MarrytingButtonType.LeftArrow(DarkColor.Grey700, DarkColor.Grey200),
                     onClick = onPreviousPressed
                 )
             }
@@ -110,7 +111,7 @@ private fun RegisterBottomBar(
                     modifier = Modifier.align(Alignment.CenterEnd),
                     text = "DONE",
                     enabled = contentState.enabledNext,
-                    buttonType = MarrytingButtonType.RightArrow(Color.Grey800, Color.SubGreen),
+                    buttonType = MarrytingButtonType.RightArrow(DarkColor.Grey800, DarkColor.SubGreen),
                     onClick = onDonePressed
                 )
             } else {
@@ -118,7 +119,7 @@ private fun RegisterBottomBar(
                     modifier = Modifier.align(Alignment.CenterEnd),
                     text = "NEXT",
                     enabled = contentState.enabledNext,
-                    buttonType = MarrytingButtonType.RightArrow(Color.Grey800, Color.SubGreen),
+                    buttonType = MarrytingButtonType.RightArrow(DarkColor.Grey800, DarkColor.SubGreen),
                     onClick = onNextPressed
                 )
             }

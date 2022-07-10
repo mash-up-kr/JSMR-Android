@@ -9,7 +9,7 @@ import com.ui.theme.Color
 
 @Composable
 fun RegisterResultScreen() {
-    Surface(modifier = Modifier.background(Color.SubGreen)) {
+    Surface() {
         Text(text = "done")
     }
 }
