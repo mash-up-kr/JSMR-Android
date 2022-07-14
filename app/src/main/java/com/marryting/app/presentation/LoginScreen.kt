@@ -17,7 +17,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.kakao.sdk.user.UserApiClient
 import com.marryting.app.R
 import com.marryting.app.presentation.login.LoginViewModel
@@ -25,7 +24,6 @@ import com.marryting.app.presentation.login.LoginViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(navController: NavController, viewModel: LoginViewModel = hiltViewModel()) {
-
     val context = LocalContext.current
 
     Scaffold {

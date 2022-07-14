@@ -1,4 +1,4 @@
-import gradle.kotlin.dsl.accessors._d3d825ede134c4a0732d5feeb4761c1d.spotless
+import gradle.kotlin.dsl.accessors._01a7fddcf81aa279b379d6fe3cb64505.spotless
 
 /*
  * Copyright 2022 The Android Open Source Project
@@ -30,7 +30,10 @@ spotless {
         trimTrailingWhitespace()
         indentWithSpaces()
         endWithNewline()
-        ktlint(libs.findVersion("ktlint").get().toString()).userData(mapOf("android" to "true"))
+        ktlint(libs.findVersion("ktlint").get().toString())
+            .setUseExperimental(true)
+            .editorConfigOverride(mapOf("max_line_length" to 500, "android" to "true"))
+
     }
     format("kts") {
         target("**/*.kts")

@@ -9,8 +9,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 // @HiltViewModel
-class RegisterViewModel(
-) : ViewModel() {
+class RegisterViewModel() : ViewModel() {
 
     private val _uiState: MutableStateFlow<RegisterState> = MutableStateFlow(RegisterState.Loading)
     val uiState: StateFlow<RegisterState>
