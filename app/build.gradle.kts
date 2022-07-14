@@ -60,7 +60,6 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.compose.ui.util)
-    implementation(libs.androidx.compose.ui.util)
     implementation(libs.google.accompanist.pager)
     implementation(libs.google.accompanist.permissions)
 

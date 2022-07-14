@@ -63,7 +63,7 @@ fun GalleryScreen(modifier: Modifier) {
             HorizontalPager(
                 modifier = Modifier.align(Alignment.Center),
                 count = pictureList.size,
-                contentPadding = PaddingValues(horizontal = 40.dp, vertical = 40.dp)
+                contentPadding = PaddingValues(horizontal = 40.dp, vertical = 40.dp),
             ) { page ->
                 when (page) {
                     0 -> {
@@ -72,28 +72,26 @@ fun GalleryScreen(modifier: Modifier) {
                         }
                     }
                     else -> {
-                        Card(
-                            modifier = Modifier
-                                .graphicsLayer {
-                                    val pageOffset =
-                                        calculateCurrentOffsetForPage(page).absoluteValue
+                        Card(modifier = Modifier
+                            .graphicsLayer {
+                                val pageOffset =
+                                    calculateCurrentOffsetForPage(page).absoluteValue
 
-                                    lerp(
-                                        start = 0.85f,
-                                        stop = 1f,
-                                        fraction = 1f - pageOffset.coerceIn(0f, 1f)
-                                    ).also { scale ->
-                                        scaleX = scale
-                                        scaleY = scale
-                                    }
-
-                                    alpha = lerp(
-                                        start = 0.5f,
-                                        stop = 1f,
-                                        fraction = 1f - pageOffset.coerceIn(0f, 1f)
-                                    )
+                                lerp(
+                                    start = 0.85f,
+                                    stop = 1f,
+                                    fraction = 1f - pageOffset.coerceIn(0f, 1f)
+                                ).also { scale ->
+                                    scaleX = scale
+                                    scaleY = scale
                                 }
-                        ) {
+
+                                alpha = lerp(
+                                    start = 0.5f,
+                                    stop = 1f,
+                                    fraction = 1f - pageOffset.coerceIn(0f, 1f)
+                                )
+                            }) {
                             val bitmapImage =
                                 (pictureList[page] as PicturesScreenItemType.ProfilePicture).bitmap.asImageBitmap()
                             Image(
@@ -109,7 +107,9 @@ fun GalleryScreen(modifier: Modifier) {
 }
 
 @Composable
-fun PictureAddScreen(bitmap: (Bitmap) -> Unit) {
+fun PictureAddScreen(
+    bitmap: (Bitmap) -> Unit
+) {
     val context = LocalContext.current
 
     val launcher = rememberLauncherForActivityResult(
@@ -124,8 +124,7 @@ fun PictureAddScreen(bitmap: (Bitmap) -> Unit) {
                     bitmap(MediaStore.Images.Media.getBitmap(context.contentResolver, uri))
                 }
             }
-        }
-    )
+        })
 
     val requestPermission = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestMultiplePermissions(),
@@ -138,8 +137,7 @@ fun PictureAddScreen(bitmap: (Bitmap) -> Unit) {
                     launcher.launch("image/*")
                 }
             }
-        }
-    )
+        })
 
     Column {
         Box(
