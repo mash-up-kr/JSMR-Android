@@ -16,10 +16,7 @@ import com.ui.theme.DarkColor
 import com.ui.theme.LightColor
 
 @Composable
-fun ContentTitle(
-    modifier: Modifier = Modifier,
-    title: List<String>
-) {
+fun ContentTitle(modifier: Modifier = Modifier, title: List<String>) {
     Box(modifier = modifier) {
         Text(
             buildAnnotatedString {
@@ -33,10 +30,7 @@ fun ContentTitle(
     }
 }
 
-private fun AnnotatedString.Builder.setWithStyle(
-    color: androidx.compose.ui.graphics.Color,
-    title: String
-) {
+private fun AnnotatedString.Builder.setWithStyle(color: androidx.compose.ui.graphics.Color, title: String) {
     fun getSpanStyle(color: androidx.compose.ui.graphics.Color): SpanStyle = SpanStyle(
         fontWeight = FontWeight.Bold,
         color = color,
@@ -51,9 +45,7 @@ private fun AnnotatedString.Builder.setWithStyle(
 }
 
 @Composable
-fun ContentDescription(
-    description: String
-) {
+fun ContentDescription(description: String) {
     Text(
         text = description,
         fontSize = 16.sp,
