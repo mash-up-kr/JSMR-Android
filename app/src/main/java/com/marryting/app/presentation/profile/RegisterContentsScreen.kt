@@ -17,6 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.marryting.app.component.MarrytingButton
 import com.marryting.app.component.MarrytingButtonType
+import com.marryting.app.data.profile.ContentViewType
+import com.marryting.app.presentation.picture.GalleryScreen
 import com.marryting.app.presentation.profile.component.ProgressIndicator
 import com.marryting.app.presentation.profile.component.RegisterContentDescription
 import com.marryting.app.presentation.profile.component.RegisterContentTitle
@@ -45,7 +47,14 @@ fun RegisterContentsScreen(
             )
         },
         content = {
-            //
+            when (currentContentState.registerContent.contentViewType) {
+                ContentViewType.Pictures -> {
+                    GalleryScreen(
+                        modifier = Modifier
+                            .padding(it)
+                    )
+                }
+            }
         },
         bottomBar = {
             RegisterBottomBar(
@@ -124,7 +133,8 @@ private fun RegisterBottomBar(
                     text = "NEXT",
                     enabled = contentState.enabledNext,
                     buttonType = MarrytingButtonType.RightArrow(
-                        DarkColor.Grey800, DarkColor.SubGreen
+                        DarkColor.Grey800,
+                        DarkColor.SubGreen
                     ),
                     onClick = onNextPressed
                 )

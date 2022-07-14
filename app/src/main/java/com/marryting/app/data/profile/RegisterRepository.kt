@@ -13,7 +13,7 @@ class RegisterRepository {
             id = 1,
             title = listOf("당신의 ", "매력적인", " 모습을\n보여주세요"),
             description = "2장 이상의 다양한 모습을 보고싶어요",
-            contentViewType = null
+            contentViewType = ContentViewType.Pictures
         ),
         RegisterContent(
             id = 2,

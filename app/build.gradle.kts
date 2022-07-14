@@ -58,7 +58,9 @@ dependencies {
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigation.compose)
-
+    implementation(libs.androidx.compose.ui.util)
+    implementation("com.google.accompanist:accompanist-permissions:0.24.13-rc")
+    implementation("com.google.accompanist:accompanist-pager:0.22.0-rc")
 
     implementation(libs.retrofit.core)
     implementation(libs.okhttp.logging)
