@@ -11,6 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.marryting.app.presentation.LoginScreen
 import com.marryting.app.presentation.empty.EmptyScreen
+import com.marryting.app.presentation.profile.EditScreen
 import com.ui.theme.MarrytingTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,8 +20,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
             MarrytingTheme {
@@ -42,6 +41,9 @@ fun NavigationGraph(navController: NavHostController) {
         }
         composable("empty") {
             EmptyScreen()
+        }
+        composable("edit"){
+            EditScreen()
         }
     }
 }

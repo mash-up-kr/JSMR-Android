@@ -62,7 +62,8 @@ fun LoginScreen(
                     .padding(bottom = 78.dp)
                     .align(Alignment.BottomCenter),
                 onClick = {
-                    if (UserApiClient.instance.isKakaoTalkLoginAvailable(context)) {
+                    navController.navigate("edit")
+                    /*if (UserApiClient.instance.isKakaoTalkLoginAvailable(context)) {
                         UserApiClient.instance.loginWithKakaoTalk(
                             context = context,
                             callback = { token, error ->
@@ -74,7 +75,7 @@ fun LoginScreen(
                             callback = { token, error ->
                             }
                         )
-                    }
+                    }*/
                 }
             ) {
                 Text(text = "카카오톡으로 시작하기")
