@@ -2,6 +2,8 @@ package com.marryting.app.presentation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -15,13 +17,17 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.kakao.sdk.user.UserApiClient
 import com.marryting.app.R
 import com.marryting.app.presentation.login.LoginViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(viewModel: LoginViewModel = hiltViewModel()) {
+fun LoginScreen(
+    navController: NavController,
+    viewModel: LoginViewModel = hiltViewModel()
+) {
 
     val context = LocalContext.current
     Scaffold {
@@ -37,6 +43,20 @@ fun LoginScreen(viewModel: LoginViewModel = hiltViewModel()) {
                 painter = painterResource(id = R.drawable.ic_launcher_background),
                 contentDescription = ""
             )
+
+            Column {
+                Button(onClick = {
+                    navController.navigate("register")
+                }) {
+                    Text(text = "profile 화면이동")
+                }
+
+                Button(onClick = {
+                    navController.navigate("empty")
+                }) {
+                    Text(text = "empty 화면이동")
+                }
+            }
 
             Button(
                 modifier = Modifier
