@@ -1,14 +1,13 @@
-package com.marryting.app.presentation
+package com.marryting.app.presentation.login
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,7 +18,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.kakao.sdk.user.UserApiClient
 import com.marryting.app.R
-import com.marryting.app.presentation.login.LoginViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -40,6 +38,7 @@ fun LoginScreen(navController: NavController, viewModel: LoginViewModel = hiltVi
                 contentDescription = ""
             )
 
+<<<<<<< HEAD:app/src/main/java/com/marryting/app/presentation/LoginScreen.kt
             Row {
                 Button(onClick = {
                     navController.navigate("register")
@@ -49,26 +48,34 @@ fun LoginScreen(navController: NavController, viewModel: LoginViewModel = hiltVi
             }
 
             Button(
+=======
+            Box(
+>>>>>>> develop:app/src/main/java/com/marryting/app/presentation/login/LoginScreen.kt
                 modifier = Modifier
                     .padding(bottom = 78.dp)
-                    .align(Alignment.BottomCenter),
-                onClick = {
-                    if (UserApiClient.instance.isKakaoTalkLoginAvailable(context)) {
-                        UserApiClient.instance.loginWithKakaoTalk(
-                            context = context,
-                            callback = { token, error ->
+                    .align(Alignment.BottomCenter)
+                    .clickable(
+                        onClick = {
+                            if (UserApiClient.instance.isKakaoTalkLoginAvailable(context)) {
+                                UserApiClient.instance.loginWithKakaoTalk(
+                                    context = context,
+                                    callback = { token, error ->
+                                    }
+                                )
+                            } else {
+                                UserApiClient.instance.loginWithKakaoAccount(
+                                    context = context,
+                                    callback = { token, error ->
+                                    }
+                                )
                             }
-                        )
-                    } else {
-                        UserApiClient.instance.loginWithKakaoAccount(
-                            context = context,
-                            callback = { token, error ->
-                            }
-                        )
-                    }
-                }
+                        }
+                    ),
             ) {
-                Text(text = "카카오톡으로 시작하기")
+                Image(
+                    painter = painterResource(id = R.drawable.ic_kakao_login),
+                    contentDescription = ""
+                )
             }
         }
     }
