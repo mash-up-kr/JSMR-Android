@@ -28,6 +28,8 @@ retrofit = "2.9.0"
 spotless = "6.8.0"
 kakaoLogin = "2.10.0"
 moshi = "1.8.0"
+googlePermissions = "0.24.13-rc"
+googlePager = "0.22.0-rc"
 
 [libraries]
 accompanist-flowlayout = { group = "com.google.accompanist", name = "accompanist-flowlayout", version.ref = "accompanist" }
@@ -47,6 +49,9 @@ androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navig
 androidx-lifecycle-viewModelCompose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidxLifecycle" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidxNavigation" }
 androidx-savedstate-ktx = { group = "androidx.savedstate", name = "savedstate-ktx", version.ref = "androidxSavedState" }
+
+google-accompanist-permissions = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "googlePermissions" }
+google-accompanist-pager = { group = "com.google.accompanist", name = "accompanist-pager", version.ref = "googlePager" }
 
 androidx-test-core = { group = "androidx.test", name = "core", version.ref = "androidxTest" }
 androidx-test-ext = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "androidxTestExt" }
