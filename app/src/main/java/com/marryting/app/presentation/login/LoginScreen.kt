@@ -68,7 +68,7 @@ fun LoginScreen(navController: NavController, viewModel: LoginViewModel = hiltVi
                                 )
                             }
                         }
-                    ),
+                    )
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_kakao_login),
