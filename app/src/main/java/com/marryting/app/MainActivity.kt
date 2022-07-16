@@ -38,7 +38,7 @@ fun NavigationGraph(navController: NavHostController) {
         startDestination = "start"
     ) {
         composable("start") {
-            LoginScreen()
+            LoginScreen(navController = navController)
         }
         composable("empty") {
             EmptyScreen()
