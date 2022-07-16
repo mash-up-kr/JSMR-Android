@@ -41,7 +41,7 @@ fun NavigationGraph(navController: NavHostController) {
         composable("empty") {
             EmptyScreen()
         }
-        composable("edit"){
+        composable("edit") {
             EditScreen()
         }
     }
