@@ -39,7 +39,7 @@ fun NavigationGraph(navController: NavHostController) {
         composable("start") {
             LoginScreen(navController)
         }
-        composable("empty"){
+        composable("empty") {
             EmptyScreen()
         }
         composable("register") {

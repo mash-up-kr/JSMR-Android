@@ -57,7 +57,6 @@ fun EmptyScreen() {
                     text = "SHARE",
                     enabled = true
                 ) {
-
                 }
             }
         }
