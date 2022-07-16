@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "com.marryting.app"
-        minSdk = 21
+        minSdk = 23
         targetSdk = 32
         versionCode = 1
         versionName = "1.0"
@@ -54,11 +54,14 @@ dependencies {
     implementation(libs.material3)
     debugImplementation(libs.androidx.compose.ui.tooling)
     implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.compose.ui.text.font)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigation.compose)
-
+    implementation(libs.google.accompanist.permissions)
+    implementation(libs.google.accompanist.pager)
+    implementation(libs.google.accompanist.pager.indicators)
 
     implementation(libs.retrofit.core)
     implementation(libs.okhttp.logging)
