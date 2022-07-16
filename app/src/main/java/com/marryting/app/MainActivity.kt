@@ -9,7 +9,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.marryting.app.presentation.login.LoginScreen
+import com.marryting.app.presentation.LoginScreen
+import com.marryting.app.presentation.empty.EmptyScreen
 import com.ui.theme.MarrytingTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -37,7 +38,10 @@ fun NavigationGraph(navController: NavHostController) {
         startDestination = "start"
     ) {
         composable("start") {
-            LoginScreen()
+            LoginScreen(navController = navController)
+        }
+        composable("empty") {
+            EmptyScreen()
         }
     }
 }
