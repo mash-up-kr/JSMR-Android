@@ -1,4 +1,5 @@
 pluginManagement {
+    includeBuild("build-logic")
     repositories {
         gradlePluginPortal()
         google()
@@ -10,7 +11,8 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven(url = "https://devrepo.kakao.com/nexus/content/groups/public/")
     }
 }
-rootProject.name = "JSMR"
-include ':app'
+rootProject.name = "Marryting"
+include(":app")
