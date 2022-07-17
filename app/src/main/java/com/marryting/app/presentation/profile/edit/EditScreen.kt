@@ -89,7 +89,7 @@ fun EditScreen(viewModel: EditViewModel = hiltViewModel()) {
                     Icon(
                         modifier = Modifier.align(Alignment.Bottom),
                         painter = painterResource(id = R.drawable.ic_profile_edit),
-                        contentDescription = "",
+                        contentDescription = ""
                     )
                 }
 
@@ -143,9 +143,7 @@ fun ProfileEditPictures() {
 }
 
 @Composable
-fun ProfileEditKeyword(
-    keywordList: Map<String, Color>
-) {
+fun ProfileEditKeyword(keywordList: Map<String, Color>) {
     Column(
         modifier = Modifier
             .padding(top = 60.dp)
@@ -163,16 +161,12 @@ fun ProfileEditKeyword(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileEditKeywordButton(
-    text: String,
-    backgroundColor: Color
-) {
+fun ProfileEditKeywordButton(text: String, backgroundColor: Color) {
     Card(
         modifier = Modifier
             .clip(RoundedCornerShape(30.dp))
             .background(backgroundColor)
     ) {
-
         Text(
             fontFamily = MontserratFontFamily,
             fontWeight = FontWeight.Medium,

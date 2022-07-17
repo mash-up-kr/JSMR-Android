@@ -22,11 +22,7 @@ import com.marryting.app.presentation.login.LoginViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(
-    navController: NavController,
-    viewModel: LoginViewModel = hiltViewModel()
-) {
-
+fun LoginScreen(navController: NavController, viewModel: LoginViewModel = hiltViewModel()) {
     val context = LocalContext.current
     Scaffold {
         Box(

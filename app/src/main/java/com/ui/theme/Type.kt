@@ -60,5 +60,5 @@ val MontserratFontFamily = FontFamily(
     Font(
         resId = R.font.montserrat_semibold,
         weight = FontWeight.SemiBold
-    ),
+    )
 )
