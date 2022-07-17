@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 fun MarrytingTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     ThemeState.darkModeState.value = darkTheme
     MaterialTheme(
-        typography = Typography,
         content = content
     )
 }
