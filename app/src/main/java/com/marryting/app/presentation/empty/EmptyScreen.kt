@@ -21,7 +21,6 @@ import com.ui.theme.LightColor
 
 @Composable
 fun EmptyScreen() {
-
     Surface {
         Box(
             modifier = Modifier.fillMaxSize()
@@ -52,7 +51,7 @@ fun EmptyScreen() {
                         .padding(bottom = 40.dp, top = 10.dp),
                     buttonType = MarrytingButtonType.RightArrow(
                         textAndCircleColor = Color.White,
-                        backgroundAndArrowColor = LightColor.Grey800,
+                        backgroundAndArrowColor = LightColor.Grey800
                     ),
                     text = "SHARE",
                     enabled = true

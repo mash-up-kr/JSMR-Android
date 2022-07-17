@@ -15,11 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ProgressIndicator(
-    modifier: Modifier = Modifier,
-    currentContentIndex: Int,
-    totalContentsCount: Int
-) {
+fun ProgressIndicator(modifier: Modifier = Modifier, currentContentIndex: Int, totalContentsCount: Int) {
     Row(
         modifier = modifier.fillMaxWidth()
     ) {

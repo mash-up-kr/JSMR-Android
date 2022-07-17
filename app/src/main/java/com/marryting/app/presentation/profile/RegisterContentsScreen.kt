@@ -17,6 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.marryting.app.component.MarrytingButton
 import com.marryting.app.component.MarrytingButtonType
+import com.marryting.app.data.profile.ContentViewType
+import com.marryting.app.presentation.picture.GalleryScreen
 import com.marryting.app.presentation.profile.component.ProgressIndicator
 import com.marryting.app.presentation.profile.component.RegisterContentDescription
 import com.marryting.app.presentation.profile.component.RegisterContentTitle
@@ -25,10 +27,7 @@ import com.ui.theme.DarkColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegisterContentsScreen(
-    contents: RegisterState.Contents,
-    onDonePressed: () -> Unit
-) {
+fun RegisterContentsScreen(contents: RegisterState.Contents, onDonePressed: () -> Unit) {
     val currentContentState = remember(contents.currentContentIndex) {
         contents.registerContentsState[contents.currentContentIndex]
     }
@@ -45,7 +44,14 @@ fun RegisterContentsScreen(
             )
         },
         content = {
-            //
+            when (currentContentState.registerContent.contentViewType) {
+                ContentViewType.Pictures -> {
+                    GalleryScreen(
+                        modifier = Modifier
+                            .padding(it)
+                    )
+                }
+            }
         },
         bottomBar = {
             RegisterBottomBar(
@@ -59,10 +65,7 @@ fun RegisterContentsScreen(
 }
 
 @Composable
-private fun RegisterTopBar(
-    contentState: RegisterContentState,
-    currentContentIndex: Int
-) {
+private fun RegisterTopBar(contentState: RegisterContentState, currentContentIndex: Int) {
     Surface(
         color = Color.DarkBackground,
         modifier = Modifier
@@ -82,12 +85,7 @@ private fun RegisterTopBar(
 }
 
 @Composable
-private fun RegisterBottomBar(
-    contentState: RegisterContentState,
-    onPreviousPressed: () -> Unit,
-    onNextPressed: () -> Unit,
-    onDonePressed: () -> Unit
-) {
+private fun RegisterBottomBar(contentState: RegisterContentState, onPreviousPressed: () -> Unit, onNextPressed: () -> Unit, onDonePressed: () -> Unit) {
     Surface(
         color = Color.DarkBackground,
         modifier = Modifier
@@ -103,7 +101,8 @@ private fun RegisterBottomBar(
                     text = "PREV",
                     enabled = true,
                     buttonType = MarrytingButtonType.LeftArrow(
-                        DarkColor.Grey700, DarkColor.Grey200
+                        DarkColor.Grey700,
+                        DarkColor.Grey200
                     ),
                     onClick = onPreviousPressed
                 )
@@ -114,7 +113,8 @@ private fun RegisterBottomBar(
                     text = "DONE",
                     enabled = contentState.enabledNext,
                     buttonType = MarrytingButtonType.RightArrow(
-                        DarkColor.Grey800, DarkColor.SubGreen
+                        DarkColor.Grey800,
+                        DarkColor.SubGreen
                     ),
                     onClick = onDonePressed
                 )
@@ -124,7 +124,8 @@ private fun RegisterBottomBar(
                     text = "NEXT",
                     enabled = contentState.enabledNext,
                     buttonType = MarrytingButtonType.RightArrow(
-                        DarkColor.Grey800, DarkColor.SubGreen
+                        DarkColor.Grey800,
+                        DarkColor.SubGreen
                     ),
                     onClick = onNextPressed
                 )
