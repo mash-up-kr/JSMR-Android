@@ -12,7 +12,6 @@ fun MarrytingTheme(
 
     ThemeState.darkModeState.value = darkTheme
     MaterialTheme(
-        typography = Typography,
         content = content
     )
 }
