@@ -30,7 +30,6 @@ import com.ui.theme.LightColor
 @Preview
 fun ParticipationScreen() {
     Surface {
-
         Column {
             Image(
                 modifier = Modifier
@@ -50,7 +49,6 @@ fun ParticipationScreen() {
 @Composable
 @Preview
 fun ParticipationItem() {
-
     Column(
         modifier = Modifier
             .padding(start = 32.dp)

@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import com.marryting.app.presentation.empty.EmptyScreen
 import com.marryting.app.presentation.login.LoginScreen
 import com.marryting.app.presentation.profile.RegisterScreen
+import com.marryting.app.presentation.profile.edit.EditScreen
 import com.ui.theme.MarrytingTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -44,8 +45,8 @@ fun NavigationGraph(navController: NavHostController) {
         composable("empty") {
             EmptyScreen()
         }
-        composable("register") {
-            RegisterScreen()
+        composable("edit") {
+            EditScreen()
         }
     }
 }
