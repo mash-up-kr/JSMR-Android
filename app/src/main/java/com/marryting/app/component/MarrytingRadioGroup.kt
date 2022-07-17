@@ -27,12 +27,7 @@ import com.ui.theme.DarkColor
 
 @ExperimentalMaterial3Api
 @Composable
-fun MarrytingRadioGroup(
-    modifier: Modifier = Modifier,
-    items: List<String> = emptyList(),
-    selectedItem: String,
-    itemSelected: (String) -> Unit
-) {
+fun MarrytingRadioGroup(modifier: Modifier = Modifier, items: List<String> = emptyList(), selectedItem: String, itemSelected: (String) -> Unit) {
     Column {
         items.forEach { item ->
 
@@ -64,7 +59,6 @@ fun MarrytingRadioGroup(
                     )
             ) {
                 Row(modifier = Modifier.padding(20.dp)) {
-
                     Icon(
                         painter = painterResource(id = R.drawable.ic_radio_check_disabled),
                         tint = if (selectedItem == item) {

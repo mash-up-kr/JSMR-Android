@@ -16,10 +16,7 @@ import com.ui.theme.DarkColor
 import com.ui.theme.LightColor
 
 @Composable
-fun RegisterContentTitle(
-    modifier: Modifier = Modifier,
-    title: List<String>
-) {
+fun RegisterContentTitle(modifier: Modifier = Modifier, title: List<String>) {
     Box(modifier = modifier) {
         Text(
             buildAnnotatedString {
@@ -33,10 +30,7 @@ fun RegisterContentTitle(
     }
 }
 
-private fun AnnotatedString.Builder.setWithStyle(
-    color: Color,
-    title: String
-) {
+private fun AnnotatedString.Builder.setWithStyle(color: Color, title: String) {
     fun getSpanStyle(color: Color): SpanStyle = SpanStyle(
         fontWeight = FontWeight.Bold,
         color = color,
@@ -51,9 +45,7 @@ private fun AnnotatedString.Builder.setWithStyle(
 }
 
 @Composable
-fun RegisterContentDescription(
-    description: String
-) {
+fun RegisterContentDescription(description: String) {
     Text(
         text = description,
         fontSize = 16.sp,

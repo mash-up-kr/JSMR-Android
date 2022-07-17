@@ -21,13 +21,7 @@ import com.marryting.app.R
 import com.ui.theme.DarkColor
 
 @Composable
-fun MarrytingButton(
-    modifier: Modifier = Modifier,
-    text: String = "",
-    enabled: Boolean = false,
-    buttonType: MarrytingButtonType,
-    onClick: () -> Unit,
-) {
+fun MarrytingButton(modifier: Modifier = Modifier, text: String = "", enabled: Boolean = false, buttonType: MarrytingButtonType, onClick: () -> Unit) {
     Button(
         modifier = modifier,
         enabled = enabled,
@@ -55,16 +49,13 @@ fun MarrytingButton(
 }
 
 @Composable
-private fun MarrytingButtonArrow(
-    buttonType: MarrytingButtonType
-) {
+private fun MarrytingButtonArrow(buttonType: MarrytingButtonType) {
     Box(
         modifier = Modifier
             .size(40.dp)
             .background(buttonType.textAndCircleColor, RoundedCornerShape(40.dp)),
         contentAlignment = Alignment.Center
     ) {
-
         val painter: Int = if (buttonType is MarrytingButtonType.LeftArrow) {
             R.drawable.ic_arrow_left
         } else {

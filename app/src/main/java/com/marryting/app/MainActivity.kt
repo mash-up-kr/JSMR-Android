@@ -4,13 +4,13 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
-import androidx.core.view.WindowCompat
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.marryting.app.presentation.LoginScreen
 import com.marryting.app.presentation.empty.EmptyScreen
+import com.marryting.app.presentation.login.LoginScreen
+import com.marryting.app.presentation.profile.RegisterScreen
 import com.ui.theme.MarrytingTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,8 +19,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
             MarrytingTheme {
@@ -40,8 +38,14 @@ fun NavigationGraph(navController: NavHostController) {
         composable("start") {
             LoginScreen(navController = navController)
         }
+        composable("register") {
+            RegisterScreen()
+        }
         composable("empty") {
             EmptyScreen()
+        }
+        composable("register") {
+            RegisterScreen()
         }
     }
 }

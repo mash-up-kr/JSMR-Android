@@ -59,6 +59,10 @@ dependencies {
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.compose.ui.util)
+    implementation(libs.androidx.compose.ui.util)
+    implementation(libs.google.accompanist.pager)
+    implementation(libs.google.accompanist.permissions)
 
     implementation(libs.retrofit.core)
     implementation(libs.okhttp.logging)
