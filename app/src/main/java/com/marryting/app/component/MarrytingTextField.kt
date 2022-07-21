@@ -28,44 +28,77 @@ import com.ui.theme.DarkColor
 import com.ui.theme.KoreaTypography
 
 @Composable
-fun MarrytingTextField(modifier: Modifier = Modifier, value: String, onValueChanged: (String) -> Unit, onValueClear: () -> Unit, label: String, placeholder: String, maxLength: Int) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .border(1.dp, DarkColor.Grey300, RoundedCornerShape(8.dp))
-            .background(DarkColor.Grey700, RoundedCornerShape(8.dp))
-            .padding(horizontal = 20.dp, vertical = 14.dp)
-    ) {
-        Column(modifier = Modifier) {
-            Text(
-                text = label,
-                style = KoreaTypography.caption,
-                color = DarkColor.Grey400
-            )
-            BasicTextField(
-                value = value,
-                onValueChange = onValueChanged,
-                textStyle = KoreaTypography.subtitle1.copy(color = Color.White),
-                singleLine = true,
-                cursorBrush = SolidColor(DarkColor.Grey300),
-                decorationBox = { innerTextField ->
-                    if (value.isEmpty()) {
-                        Text(
-                            text = placeholder,
-                            style = KoreaTypography.subtitle1,
-                            color = DarkColor.Grey400
-                        )
+fun MarrytingTextField(modifier: Modifier = Modifier, value: String, onValueChanged: (String) -> Unit, onValueClear: () -> Unit, isActive: Boolean, isError: Boolean, label: String, placeholder: String) {
+    val currentColor = if (isActive) {
+        DarkColor.SubGreen
+    } else if (isError) {
+        DarkColor.ErrorRed
+    } else {
+        DarkColor.Grey400
+    }
+
+    Column {
+        Box(
+            modifier = modifier
+                .fillMaxWidth()
+                .then(
+                    if (isActive || isError) {
+                        Modifier.border(1.dp, currentColor, RoundedCornerShape(8.dp))
                     } else {
-                        innerTextField()
+                        Modifier
+                    }
+                )
+                .background(DarkColor.Grey700, RoundedCornerShape(8.dp))
+                .padding(horizontal = 20.dp, vertical = 14.dp)
+        ) {
+            Column(modifier = Modifier) {
+                Text(
+                    text = label,
+                    style = KoreaTypography.caption,
+                    color = currentColor
+                )
+                BasicTextField(
+                    value = value,
+                    onValueChange = onValueChanged,
+                    textStyle = KoreaTypography.subtitle1.copy(color = Color.White),
+                    singleLine = true,
+                    cursorBrush = SolidColor(DarkColor.Grey400),
+                    decorationBox = { innerTextField ->
+                        if (value.isEmpty()) {
+                            Text(
+                                text = placeholder,
+                                style = KoreaTypography.subtitle1,
+                                color = DarkColor.Grey400
+                            )
+                        } else {
+                            innerTextField()
+                        }
+                    }
+                )
+            }
+            if (value.isNotEmpty()) {
+                Box(
+                    modifier = Modifier.align(Alignment.BottomEnd)
+                ) {
+                    if (isError) {
+                        ErrorIcon()
+                    } else {
+                        CloseButton(modifier = modifier) { onValueClear() }
                     }
                 }
-            )
+            }
         }
-        if (value.isNotEmpty()) {
-            CloseButton(
-                modifier = Modifier.align(Alignment.BottomEnd),
-                onClick = { onValueClear() }
-            )
+
+        if (isError) {
+            Box(
+                modifier = Modifier.padding(top = 4.dp, start = 20.dp, end = 20.dp)
+            ) {
+                Text(
+                    text = "error message",
+                    style = KoreaTypography.caption,
+                    color = currentColor
+                )
+            }
         }
     }
 }
@@ -83,6 +116,15 @@ fun CloseButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
     }
 }
 
+@Composable
+fun ErrorIcon() {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_error),
+        contentDescription = null,
+        tint = DarkColor.ErrorRed
+    )
+}
+
 @Preview
 @Composable
 fun Prev() {
@@ -91,8 +133,9 @@ fun Prev() {
         value = text,
         onValueChanged = { if (text.length <= 5) text = it },
         onValueClear = { text = "" },
+        isActive = false,
+        isError = true,
         label = "이름",
-        placeholder = "이름을 입력해주세요",
-        maxLength = 5
+        placeholder = "이름을 입력해주세요"
     )
 }
