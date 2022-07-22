@@ -23,7 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.marryting.app.R
-import com.marryting.app.presentation.profile.UserInfoItemState
+import com.marryting.app.presentation.profile.register.UserInfoItemState
 import com.ui.theme.Color
 import com.ui.theme.DarkColor
 import com.ui.theme.KoreaTypography
