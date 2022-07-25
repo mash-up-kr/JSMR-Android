@@ -1,6 +1,7 @@
 package com.marryting.app.component
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.DropdownMenu
@@ -23,15 +24,30 @@ import com.ui.theme.DarkColor
 
 @Composable
 fun MarrytingDropdown(modifier: Modifier = Modifier, value: String, onValueChanged: (String) -> Unit, state: UserInfoItemState, label: String, placeholder: String) {
-    Container(modifier = modifier, state = state, label = label) {
-        DropdownItem(value = value, onValueChanged = onValueChanged, placeholder = placeholder)
+    var isDropdownMenuExpanded by remember { mutableStateOf(false) }
+
+    Container(
+        modifier = modifier
+            .clickable(
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() },
+                onClick = { isDropdownMenuExpanded = true }
+            ),
+        state = state,
+        label = label
+    ) {
+        DropdownItem(
+            isDropdownMenuExpanded = isDropdownMenuExpanded,
+            onDismissRequest = { isDropdownMenuExpanded = false },
+            value = value,
+            onValueChanged = onValueChanged,
+            placeholder = placeholder
+        )
     }
 }
 
 @Composable
-fun DropdownItem(value: String, onValueChanged: (String) -> Unit, placeholder: String) {
-    var isDropdownMenuExpanded by remember { mutableStateOf(false) }
-
+fun DropdownItem(isDropdownMenuExpanded: Boolean, onDismissRequest: () -> Unit, value: String, onValueChanged: (String) -> Unit, placeholder: String) {
     Box {
         if (value.isEmpty()) {
             PlaceHolder(placeholder = placeholder, color = DarkColor.Grey400)
@@ -42,11 +58,10 @@ fun DropdownItem(value: String, onValueChanged: (String) -> Unit, placeholder: S
         Box(
             modifier = Modifier.align(Alignment.CenterEnd)
         ) {
-            DropdownButton { isDropdownMenuExpanded = true }
-
+            DropdownIcon()
             GenderDropdownMenu(
                 isDropdownMenuExpanded = isDropdownMenuExpanded,
-                onDismissRequest = { isDropdownMenuExpanded = false },
+                onDismissRequest = onDismissRequest,
                 onValueChanged = onValueChanged
             )
         }
@@ -54,16 +69,12 @@ fun DropdownItem(value: String, onValueChanged: (String) -> Unit, placeholder: S
 }
 
 @Composable
-fun DropdownButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
-    Box(
-        modifier = modifier.clickable { onClick() }
-    ) {
-        Icon(
-            painter = painterResource(id = R.drawable.ic_dropdown),
-            contentDescription = null,
-            tint = DarkColor.Grey400
-        )
-    }
+fun DropdownIcon() {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_dropdown),
+        contentDescription = null,
+        tint = DarkColor.Grey400
+    )
 }
 
 @Composable
