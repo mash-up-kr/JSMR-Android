@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -29,55 +30,42 @@ import com.ui.theme.DarkColor
 import com.ui.theme.KoreaTypography
 
 @Composable
+fun Container(modifier: Modifier = Modifier, state: UserInfoItemState, label: String, containerItem: @Composable () -> Unit) {
+    Box(
+        modifier = modifier
+            .height(79.dp)
+            .fillMaxWidth()
+            .then(
+                when (state) {
+                    UserInfoItemState.BASIC -> Modifier
+                    else -> Modifier.border(1.dp, state.color, RoundedCornerShape(8.dp))
+                }
+            )
+            .background(DarkColor.Grey700, RoundedCornerShape(8.dp))
+            .padding(horizontal = 20.dp, vertical = 14.dp)
+    ) {
+        Column(modifier = Modifier.align(Alignment.Center)) {
+            Text(
+                text = label,
+                style = KoreaTypography.caption,
+                color = state.color
+            )
+            containerItem()
+        }
+    }
+}
+
+@Composable
 fun MarrytingTextField(modifier: Modifier = Modifier, value: String, onValueChanged: (String) -> Unit, onValueClear: () -> Unit, state: UserInfoItemState, label: String, placeholder: String) {
     Column {
-        Box(
-            modifier = modifier
-                .fillMaxWidth()
-                .then(
-                    when (state) {
-                        UserInfoItemState.BASIC -> Modifier
-                        else -> Modifier.border(1.dp, state.color, RoundedCornerShape(8.dp))
-                    }
-                )
-                .background(DarkColor.Grey700, RoundedCornerShape(8.dp))
-                .padding(horizontal = 20.dp, vertical = 14.dp)
-        ) {
-            Column(modifier = Modifier) {
-                Text(
-                    text = label,
-                    style = KoreaTypography.caption,
-                    color = state.color
-                )
-                BasicTextField(
-                    value = value,
-                    onValueChange = onValueChanged,
-                    textStyle = KoreaTypography.subtitle1.copy(color = Color.White),
-                    singleLine = true,
-                    cursorBrush = SolidColor(DarkColor.Grey400),
-                    decorationBox = { innerTextField ->
-                        if (value.isEmpty()) {
-                            Text(
-                                text = placeholder,
-                                style = KoreaTypography.subtitle1,
-                                color = DarkColor.Grey400
-                            )
-                        } else {
-                            innerTextField()
-                        }
-                    }
-                )
-            }
-            if (value.isNotEmpty()) {
-                Box(
-                    modifier = Modifier.align(Alignment.BottomEnd)
-                ) {
-                    when (state) {
-                        UserInfoItemState.ERROR -> ErrorIcon()
-                        else -> CloseButton(modifier = modifier) { onValueClear() }
-                    }
-                }
-            }
+        Container(state = state, label = label) {
+            TextFieldItem(
+                value = value,
+                onValueChanged = onValueChanged,
+                onValueClear = onValueClear,
+                state = state,
+                placeholder = placeholder
+            )
         }
 
         if (state == UserInfoItemState.ERROR) {
@@ -92,6 +80,47 @@ fun MarrytingTextField(modifier: Modifier = Modifier, value: String, onValueChan
             }
         }
     }
+}
+
+@Composable
+fun TextFieldItem(value: String, onValueChanged: (String) -> Unit, onValueClear: () -> Unit, state: UserInfoItemState, placeholder: String) {
+    Box {
+        BasicTextField(
+            value = value,
+            onValueChange = onValueChanged,
+            textStyle = KoreaTypography.subtitle1.copy(color = Color.White),
+            maxLines = 1,
+            singleLine = true,
+            cursorBrush = SolidColor(DarkColor.Grey400),
+            decorationBox = { innerTextField ->
+                if (value.isEmpty()) {
+                    PlaceHolder(placeholder = placeholder, color = DarkColor.Grey400)
+                } else {
+                    innerTextField()
+                }
+            }
+        )
+        if (value.isNotEmpty()) {
+            Box(
+                modifier = Modifier.align(Alignment.CenterEnd)
+            ) {
+                when (state) {
+                    UserInfoItemState.ERROR -> ErrorIcon()
+                    else -> CloseButton { onValueClear() }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun PlaceHolder(modifier: Modifier = Modifier, placeholder: String, color: androidx.compose.ui.graphics.Color) {
+    Text(
+        modifier = modifier.fillMaxWidth(),
+        text = placeholder,
+        style = KoreaTypography.subtitle1,
+        color = color
+    )
 }
 
 @Composable
