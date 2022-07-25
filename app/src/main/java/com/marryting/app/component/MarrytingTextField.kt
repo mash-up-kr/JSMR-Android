@@ -44,7 +44,7 @@ fun Container(modifier: Modifier = Modifier, state: UserInfoItemState, label: St
             .background(DarkColor.Grey700, RoundedCornerShape(8.dp))
             .padding(horizontal = 20.dp, vertical = 14.dp)
     ) {
-        Column(modifier = Modifier.align(Alignment.Center)) {
+        Column(modifier = Modifier.fillMaxWidth().align(Alignment.Center)) {
             Text(
                 text = label,
                 style = KoreaTypography.caption,
@@ -57,7 +57,9 @@ fun Container(modifier: Modifier = Modifier, state: UserInfoItemState, label: St
 
 @Composable
 fun MarrytingTextField(modifier: Modifier = Modifier, value: String, onValueChanged: (String) -> Unit, onValueClear: () -> Unit, state: UserInfoItemState, label: String, placeholder: String) {
-    Column {
+    Column(
+        modifier = modifier
+    ) {
         Container(state = state, label = label) {
             TextFieldItem(
                 value = value,
@@ -86,6 +88,7 @@ fun MarrytingTextField(modifier: Modifier = Modifier, value: String, onValueChan
 fun TextFieldItem(value: String, onValueChanged: (String) -> Unit, onValueClear: () -> Unit, state: UserInfoItemState, placeholder: String) {
     Box {
         BasicTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = value,
             onValueChange = onValueChanged,
             textStyle = KoreaTypography.subtitle1.copy(color = Color.White),
