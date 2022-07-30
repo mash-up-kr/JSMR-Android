@@ -35,7 +35,7 @@ fun QuestionnaireScreen(modifier: Modifier = Modifier, questionnaireList: List<Q
 
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
-            contentPadding = PaddingValues(bottom = 160.dp),
+            contentPadding = PaddingValues(bottom = 148.dp),
             verticalArrangement = Arrangement.spacedBy(32.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
