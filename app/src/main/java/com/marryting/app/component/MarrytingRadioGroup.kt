@@ -5,8 +5,8 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -16,14 +16,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.marryting.app.R
 import com.ui.theme.Color
 import com.ui.theme.DarkColor
+import com.ui.theme.KoreaTypography
 
 @ExperimentalMaterial3Api
 @Composable
@@ -45,7 +42,7 @@ fun MarrytingRadioGroup(modifier: Modifier = Modifier, items: List<String> = emp
 
             Box(
                 modifier = modifier
-                    .width(296.dp)
+                    .fillMaxWidth()
                     .padding(top = 6.dp)
                     .border(1.dp, selectedBorderColor, RoundedCornerShape(8.dp))
                     .background(backgroundColor, RoundedCornerShape(8.dp))
@@ -82,13 +79,10 @@ fun MarrytingRadioGroup(modifier: Modifier = Modifier, items: List<String> = emp
                                 DarkColor.Grey200
                             }
                         },
-                        fontStyle = FontStyle.Normal,
-                        fontSize = 16.sp,
-                        fontFamily = FontFamily.SansSerif,
-                        fontWeight = if (selectedItem == item) {
-                            FontWeight.Bold
+                        style = if (selectedItem == item) {
+                            KoreaTypography.headline5
                         } else {
-                            FontWeight.Normal
+                            KoreaTypography.body1
                         }
                     )
                 }
