@@ -8,8 +8,8 @@ data class RegisterContent(
 )
 
 sealed interface ContentViewType {
-    object Inputs : ContentViewType
+    object UserInfoInputs : ContentViewType
     object Pictures : ContentViewType
     object Keywords : ContentViewType
-    object Answers : ContentViewType
+    object Questions : ContentViewType
 }
