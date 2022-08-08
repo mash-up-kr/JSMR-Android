@@ -16,59 +16,71 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import androidx.core.content.ContextCompat
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.calculateCurrentOffsetForPage
+import com.google.accompanist.pager.rememberPagerState
 import com.marryting.app.R
 import com.ui.theme.Color
 import com.ui.theme.DarkColor
+import com.ui.theme.KoreaTypography
+import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalPagerApi::class, ExperimentalMaterial3Api::class)
 @Composable
-@Preview
-fun GalleryScreen(modifier: Modifier) {
+fun GalleryScreen(modifier: Modifier = Modifier) {
     Surface(
         modifier = modifier,
         color = Color.DarkBackground
     ) {
-        val pictureList = remember {
-            mutableStateListOf<PicturesScreenItemType>(PicturesScreenItemType.AddPicture)
-        }
+//        val pictureList = remember {
+//            mutableStateListOf<PicturesScreenItemType>(PicturesScreenItemType.AddPicture)
+//        }
+        val pictureList = remember { mutableStateListOf<PicturesScreenItemType>() }
+        val pagerState = rememberPagerState()
+        var newPagerPosition by remember { mutableStateOf(0) }
 
         Box(
             modifier = Modifier
         ) {
             HorizontalPager(
                 modifier = Modifier.align(Alignment.Center),
-                count = pictureList.size,
-                contentPadding = PaddingValues(horizontal = 40.dp, vertical = 40.dp)
+                state = pagerState,
+                count = pictureList.size + 1,
+                contentPadding = PaddingValues(horizontal = 56.dp, vertical = 40.dp)
             ) { page ->
                 when (page) {
-                    0 -> {
+                    pictureList.size -> {
                         PictureAddScreen {
                             pictureList.add(PicturesScreenItemType.ProfilePicture(it))
+                            newPagerPosition = pictureList.size - 1
                         }
                     }
                     else -> {
@@ -79,7 +91,7 @@ fun GalleryScreen(modifier: Modifier) {
                                         calculateCurrentOffsetForPage(page).absoluteValue
 
                                     lerp(
-                                        start = 0.85f,
+                                        start = 1f,
                                         stop = 1f,
                                         fraction = 1f - pageOffset.coerceIn(0f, 1f)
                                     ).also { scale ->
@@ -88,7 +100,7 @@ fun GalleryScreen(modifier: Modifier) {
                                     }
 
                                     alpha = lerp(
-                                        start = 0.5f,
+                                        start = 0.6f,
                                         stop = 1f,
                                         fraction = 1f - pageOffset.coerceIn(0f, 1f)
                                     )
@@ -98,11 +110,19 @@ fun GalleryScreen(modifier: Modifier) {
                                 (pictureList[page] as PicturesScreenItemType.ProfilePicture).bitmap.asImageBitmap()
                             Image(
                                 bitmap = bitmapImage,
-                                contentDescription = null
+                                contentDescription = null,
+                                contentScale = ContentScale.Inside,
+                                modifier = Modifier
+                                    .width(280.dp)
+                                    .height(374.dp)
                             )
                         }
                     }
                 }
+            }
+
+            LaunchedEffect(key1 = newPagerPosition) {
+                pagerState.scrollToPage(newPagerPosition)
             }
         }
     }
@@ -144,10 +164,11 @@ fun PictureAddScreen(bitmap: (Bitmap) -> Unit) {
     Column {
         Box(
             modifier = Modifier
+                .width(280.dp)
+                .height(374.dp)
                 .clip(RoundedCornerShape(16.dp))
                 .background(DarkColor.Grey700)
                 .border(2.dp, DarkColor.Grey200, RoundedCornerShape(16.dp))
-                .fillMaxSize()
                 .clickable(
                     onClick = {
                         requestPermission.launch(
@@ -160,18 +181,18 @@ fun PictureAddScreen(bitmap: (Bitmap) -> Unit) {
                 )
         ) {
             Column(
-                modifier = Modifier
-                    .align(Alignment.Center),
+                modifier = Modifier.align(Alignment.Center),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_photo_add),
-                    contentDescription = ""
+                    contentDescription = null
                 )
                 Text(
                     modifier = Modifier.padding(top = 8.dp),
                     color = DarkColor.Grey300,
-                    text = "사진 추가"
+                    text = "사진 추가",
+                    style = KoreaTypography.body1
                 )
             }
         }
