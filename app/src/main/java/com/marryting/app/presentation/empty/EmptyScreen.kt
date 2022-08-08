@@ -15,8 +15,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.marryting.app.R
 import com.marryting.app.component.MarrytingButton
+import com.marryting.app.component.MarrytingButtonColorSet
 import com.marryting.app.component.MarrytingButtonType
 import com.ui.theme.Color
+import com.ui.theme.DarkColor
 import com.ui.theme.LightColor
 
 @Composable
@@ -49,14 +51,25 @@ fun EmptyScreen() {
                         .width(176.dp)
                         .align(Alignment.CenterHorizontally)
                         .padding(bottom = 40.dp, top = 10.dp),
-                    buttonType = MarrytingButtonType.RightArrow(
-                        textAndCircleColor = Color.White,
-                        backgroundAndArrowColor = LightColor.Grey800
-                    ),
                     text = "SHARE",
-                    enabled = true
-                ) {
-                }
+                    enabled = true,
+                    buttonType = MarrytingButtonType.RightArrow(
+                        activeColorSet = MarrytingButtonColorSet(
+                            contentColor = Color.White,
+                            backgroundColor = DarkColor.Grey800,
+                            arrowColor = Color.Black
+                        ),
+                        pressedColorSet = MarrytingButtonColorSet(
+                            contentColor = Color.White,
+                            backgroundColor = LightColor.Main300
+                        ),
+                        disabledColorSet = MarrytingButtonColorSet(
+                            contentColor = LightColor.Grey200,
+                            backgroundColor = LightColor.Grey300
+                        )
+                    ),
+                    onClick = { }
+                )
             }
         }
     }
