@@ -1,9 +1,9 @@
 package com.marryting.app.presentation.profile
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.marryting.app.component.MarrytingButton
+import com.marryting.app.component.MarrytingButtonColorSet
 import com.marryting.app.component.MarrytingButtonType
 import com.marryting.app.data.profile.ContentViewType
 import com.marryting.app.presentation.picture.GalleryScreen
@@ -43,16 +44,6 @@ fun RegisterContentsScreen(contents: RegisterState.Contents, onDonePressed: () -
                 currentContentIndex = contents.currentContentIndex
             )
         },
-        content = {
-            when (currentContentState.registerContent.contentViewType) {
-                ContentViewType.Pictures -> {
-                    GalleryScreen(
-                        modifier = Modifier
-                            .padding(it)
-                    )
-                }
-            }
-        },
         bottomBar = {
             RegisterBottomBar(
                 contentState = currentContentState,
@@ -61,7 +52,13 @@ fun RegisterContentsScreen(contents: RegisterState.Contents, onDonePressed: () -
                 onDonePressed = onDonePressed
             )
         }
-    )
+    ) { paddingValues ->
+        when (currentContentState.registerContent.contentViewType) {
+            ContentViewType.Pictures -> {
+                GalleryScreen(modifier = Modifier.padding(top = paddingValues.calculateTopPadding()))
+            }
+        }
+    }
 }
 
 @Composable
@@ -76,9 +73,11 @@ private fun RegisterTopBar(contentState: RegisterContentState, currentContentInd
             currentContentIndex = currentContentIndex,
             totalContentsCount = contentState.totalContentsCount
         )
-        Column(modifier = Modifier.padding(top = 16.dp)) {
+        Column(
+            modifier = Modifier.padding(top = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
             RegisterContentTitle(title = contentState.registerContent.title)
-            Spacer(modifier = Modifier.padding(4.dp))
             RegisterContentDescription(description = contentState.registerContent.description)
         }
     }
@@ -87,7 +86,7 @@ private fun RegisterTopBar(contentState: RegisterContentState, currentContentInd
 @Composable
 private fun RegisterBottomBar(contentState: RegisterContentState, onPreviousPressed: () -> Unit, onNextPressed: () -> Unit, onDonePressed: () -> Unit) {
     Surface(
-        color = Color.DarkBackground,
+        color = androidx.compose.ui.graphics.Color.Transparent,
         modifier = Modifier
             .fillMaxWidth()
             .padding(bottom = 40.dp, start = 32.dp, end = 32.dp)
@@ -98,38 +97,61 @@ private fun RegisterBottomBar(contentState: RegisterContentState, onPreviousPres
             if (contentState.showPrevious) {
                 MarrytingButton(
                     modifier = Modifier.padding(end = 22.dp),
-                    text = "PREV",
+                    text = "PRE",
                     enabled = true,
                     buttonType = MarrytingButtonType.LeftArrow(
-                        DarkColor.Grey700,
-                        DarkColor.Grey200
+                        activeColorSet = MarrytingButtonColorSet(
+                            contentColor = DarkColor.Grey200,
+                            backgroundColor = DarkColor.Grey700
+                        ),
+                        pressedColorSet = MarrytingButtonColorSet(
+                            contentColor = Color.White,
+                            backgroundColor = DarkColor.Grey600
+                        )
                     ),
                     onClick = onPreviousPressed
                 )
             }
             if (contentState.showDone) {
-                MarrytingButton(
+                NextAndDoneButton(
                     modifier = Modifier.align(Alignment.CenterEnd),
                     text = "DONE",
                     enabled = contentState.enabledNext,
-                    buttonType = MarrytingButtonType.RightArrow(
-                        DarkColor.Grey800,
-                        DarkColor.SubGreen
-                    ),
                     onClick = onDonePressed
                 )
             } else {
-                MarrytingButton(
+                NextAndDoneButton(
                     modifier = Modifier.align(Alignment.CenterEnd),
                     text = "NEXT",
                     enabled = contentState.enabledNext,
-                    buttonType = MarrytingButtonType.RightArrow(
-                        DarkColor.Grey800,
-                        DarkColor.SubGreen
-                    ),
                     onClick = onNextPressed
                 )
             }
         }
     }
+}
+
+@Composable
+private fun NextAndDoneButton(modifier: Modifier = Modifier, text: String, enabled: Boolean, onClick: () -> Unit) {
+    MarrytingButton(
+        modifier = modifier,
+        text = text,
+        enabled = enabled,
+        buttonType = MarrytingButtonType.RightArrow(
+            activeColorSet = MarrytingButtonColorSet(
+                contentColor = DarkColor.Grey800,
+                backgroundColor = DarkColor.SubGreen,
+                arrowColor = Color.White
+            ),
+            pressedColorSet = MarrytingButtonColorSet(
+                contentColor = Color.White,
+                backgroundColor = DarkColor.SubGreen
+            ),
+            disabledColorSet = MarrytingButtonColorSet(
+                contentColor = DarkColor.Grey200,
+                backgroundColor = DarkColor.Grey300
+            )
+        ),
+        onClick = onClick
+    )
 }
