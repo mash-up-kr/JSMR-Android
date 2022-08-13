@@ -16,6 +16,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -47,10 +48,13 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.calculateCurrentOffsetForPage
 import com.google.accompanist.pager.rememberPagerState
 import com.marryting.app.R
+import com.marryting.app.component.MarrytingButtonColorSet
+import com.marryting.app.component.MarrytingButtonType
+import com.marryting.app.component.MarrytingIconButton
 import com.ui.theme.Color
 import com.ui.theme.DarkColor
 import com.ui.theme.KoreaTypography
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.delay
 import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalPagerApi::class, ExperimentalMaterial3Api::class)
@@ -60,30 +64,25 @@ fun GalleryScreen(modifier: Modifier = Modifier) {
         modifier = modifier,
         color = Color.DarkBackground
     ) {
-//        val pictureList = remember {
-//            mutableStateListOf<PicturesScreenItemType>(PicturesScreenItemType.AddPicture)
-//        }
         val pictureList = remember { mutableStateListOf<PicturesScreenItemType>() }
         val pagerState = rememberPagerState()
-        var newPagerPosition by remember { mutableStateOf(0) }
 
-        Box(
-            modifier = Modifier
-        ) {
-            HorizontalPager(
-                modifier = Modifier.align(Alignment.Center),
-                state = pagerState,
-                count = pictureList.size + 1,
-                contentPadding = PaddingValues(horizontal = 56.dp, vertical = 40.dp)
-            ) { page ->
-                when (page) {
-                    pictureList.size -> {
-                        PictureAddScreen {
+        HorizontalPager(
+            state = pagerState,
+            count = pictureList.size + 1,
+            verticalAlignment = Alignment.Top,
+            contentPadding = PaddingValues(horizontal = 56.dp, vertical = 40.dp)
+        ) { page ->
+            when (page) {
+                pictureList.size -> {
+                    PictureAddScreen { bitmapList ->
+                        bitmapList.forEach {
                             pictureList.add(PicturesScreenItemType.ProfilePicture(it))
-                            newPagerPosition = pictureList.size - 1
                         }
                     }
-                    else -> {
+                }
+                else -> {
+                    Column {
                         Card(
                             modifier = Modifier
                                 .graphicsLayer {
@@ -117,84 +116,111 @@ fun GalleryScreen(modifier: Modifier = Modifier) {
                                     .height(374.dp)
                             )
                         }
+
+                        if (pictureList.size >= 2) {
+                            Spacer(modifier = Modifier.height(8.dp))
+                            MarrytingIconButton(
+                                modifier = Modifier.align(Alignment.CenterHorizontally),
+                                buttonType = MarrytingButtonType.Icon(
+                                    activeColorSet = MarrytingButtonColorSet(
+                                        contentColor = DarkColor.Grey200,
+                                        backgroundColor = DarkColor.Grey700
+                                    ),
+                                    pressedColorSet = MarrytingButtonColorSet(
+                                        contentColor = DarkColor.Grey100,
+                                        backgroundColor = DarkColor.Grey600
+                                    ),
+                                    contentPaddingValues = PaddingValues(12.dp)
+                                ),
+                                onClick = { },
+                                drawableRes = R.drawable.ic_trash
+                            )
+                        }
                     }
                 }
             }
+        }
 
-            LaunchedEffect(key1 = newPagerPosition) {
-                pagerState.scrollToPage(newPagerPosition)
+        if (pictureList.isNotEmpty()) {
+            LaunchedEffect(key1 = pictureList.size) {
+                delay(500)  // 임시
+                pagerState.animateScrollToPage(pictureList.size - 1)
             }
         }
     }
 }
 
 @Composable
-fun PictureAddScreen(bitmap: (Bitmap) -> Unit) {
+fun PictureAddScreen(bitmapList: (List<Bitmap>) -> Unit) {
     val context = LocalContext.current
+    var selectedImagesUri by remember { mutableStateOf(listOf<Uri>()) }
 
     val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent(),
-        onResult = { uri: Uri? ->
-            uri?.let {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    val source = ImageDecoder.createSource(context.contentResolver, uri)
+        contract = ActivityResultContracts.GetMultipleContents(),
+        onResult = {
+            selectedImagesUri = it
+            val newBitmapList = mutableListOf<Bitmap>()
 
-                    bitmap(ImageDecoder.decodeBitmap(source))
-                } else {
-                    bitmap(MediaStore.Images.Media.getBitmap(context.contentResolver, uri))
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                selectedImagesUri.forEach { uri ->
+                    val source = ImageDecoder.createSource(context.contentResolver, uri)
+                    newBitmapList.add(ImageDecoder.decodeBitmap(source))
+                }
+            } else {
+                selectedImagesUri.forEach { uri ->
+                    newBitmapList.add(MediaStore.Images.Media.getBitmap(context.contentResolver, uri))
                 }
             }
+            bitmapList(newBitmapList)
         }
     )
 
     val requestPermission = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestMultiplePermissions(),
-        onResult = { map ->
-            when {
+        onResult = {
+            when (PackageManager.PERMISSION_GRANTED) {
                 ContextCompat.checkSelfPermission(
                     context,
                     Manifest.permission.READ_EXTERNAL_STORAGE
-                ) == PackageManager.PERMISSION_GRANTED -> {
+                ) -> {
                     launcher.launch("image/*")
                 }
             }
         }
     )
 
-    Column {
-        Box(
-            modifier = Modifier
-                .width(280.dp)
-                .height(374.dp)
-                .clip(RoundedCornerShape(16.dp))
-                .background(DarkColor.Grey700)
-                .border(2.dp, DarkColor.Grey200, RoundedCornerShape(16.dp))
-                .clickable(
-                    onClick = {
-                        requestPermission.launch(
-                            arrayOf(
-                                Manifest.permission.READ_EXTERNAL_STORAGE,
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE
-                            )
+    Box(
+        modifier = Modifier
+            .width(280.dp)
+            .height(374.dp)
+            .clip(RoundedCornerShape(16.dp))
+            .background(DarkColor.Grey700)
+            .border(2.dp, DarkColor.Grey200, RoundedCornerShape(16.dp))
+            .clickable(
+                onClick = {
+                    requestPermission.launch(
+                        arrayOf(
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
                         )
-                    }
-                )
+                    )
+                }
+            )
+    ) {
+        Column(
+            modifier = Modifier.align(Alignment.Center),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(
-                modifier = Modifier.align(Alignment.Center),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_photo_add),
-                    contentDescription = null
-                )
-                Text(
-                    modifier = Modifier.padding(top = 8.dp),
-                    color = DarkColor.Grey300,
-                    text = "사진 추가",
-                    style = KoreaTypography.body1
-                )
-            }
+            Image(
+                painter = painterResource(id = R.drawable.ic_photo_add),
+                contentDescription = null
+            )
+            Text(
+                modifier = Modifier.padding(top = 8.dp),
+                color = DarkColor.Grey300,
+                text = "사진 추가",
+                style = KoreaTypography.body1
+            )
         }
     }
 }
