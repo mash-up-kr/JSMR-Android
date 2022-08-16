@@ -7,6 +7,7 @@ import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -60,22 +61,24 @@ import kotlin.math.absoluteValue
 @OptIn(ExperimentalPagerApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun GalleryScreen(modifier: Modifier = Modifier) {
+    val pictureList = remember { mutableStateListOf<PicturesScreenItemType>() }
+    val pagerState = rememberPagerState()
+
+    fun pictureAddScreenCnt(): Int = if (pictureList.size < 5) 1 else 0
+
     Surface(
         modifier = modifier,
         color = Color.DarkBackground
     ) {
-        val pictureList = remember { mutableStateListOf<PicturesScreenItemType>() }
-        val pagerState = rememberPagerState()
-
         HorizontalPager(
             state = pagerState,
-            count = pictureList.size + 1,
+            count = pictureList.size + pictureAddScreenCnt(),
             verticalAlignment = Alignment.Top,
             contentPadding = PaddingValues(horizontal = 56.dp, vertical = 40.dp)
         ) { page ->
             when (page) {
                 pictureList.size -> {
-                    PictureAddScreen { bitmapList ->
+                    PictureAddScreen(pictureList.size) { bitmapList ->
                         bitmapList.forEach {
                             pictureList.add(PicturesScreenItemType.ProfilePicture(it))
                         }
@@ -132,7 +135,9 @@ fun GalleryScreen(modifier: Modifier = Modifier) {
                                     ),
                                     contentPaddingValues = PaddingValues(12.dp)
                                 ),
-                                onClick = { },
+                                onClick = {
+                                    pictureList.remove(pictureList[page])
+                                },
                                 drawableRes = R.drawable.ic_trash
                             )
                         }
@@ -151,14 +156,18 @@ fun GalleryScreen(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun PictureAddScreen(bitmapList: (List<Bitmap>) -> Unit) {
+private fun PictureAddScreen(pictureListSize: Int, bitmapList: (List<Bitmap>) -> Unit) {
     val context = LocalContext.current
     var selectedImagesUri by remember { mutableStateOf(listOf<Uri>()) }
 
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetMultipleContents(),
-        onResult = {
-            selectedImagesUri = it
+        onResult = { uriList ->
+            if (pictureListSize + uriList.size > 5) {
+                Toast.makeText(context, "사진은 최대 5장 선택 가능합니다", Toast.LENGTH_LONG).show()
+                return@rememberLauncherForActivityResult
+            }
+            selectedImagesUri = uriList
             val newBitmapList = mutableListOf<Bitmap>()
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
