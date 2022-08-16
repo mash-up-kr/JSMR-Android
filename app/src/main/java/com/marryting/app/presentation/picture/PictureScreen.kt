@@ -55,14 +55,14 @@ import com.marryting.app.component.MarrytingIconButton
 import com.ui.theme.Color
 import com.ui.theme.DarkColor
 import com.ui.theme.KoreaTypography
-import kotlinx.coroutines.delay
 import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalPagerApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun GalleryScreen(modifier: Modifier = Modifier) {
-    val pictureList = remember { mutableStateListOf<PicturesScreenItemType>() }
+fun PictureScreen(modifier: Modifier = Modifier) {
+    val pictureList = remember { mutableStateListOf<PictureScreenItemType>() }
     val pagerState = rememberPagerState()
+    var pagerPosition by remember { mutableStateOf(-1) }
 
     fun pictureAddScreenCnt(): Int = if (pictureList.size < 5) 1 else 0
 
@@ -78,9 +78,10 @@ fun GalleryScreen(modifier: Modifier = Modifier) {
         ) { page ->
             when (page) {
                 pictureList.size -> {
-                    PictureAddScreen(pictureList.size) { bitmapList ->
+                    AddPictureScreen(pictureList.size) { bitmapList ->
+                        pagerPosition = pictureList.size + bitmapList.size - 1
                         bitmapList.forEach {
-                            pictureList.add(PicturesScreenItemType.ProfilePicture(it))
+                            pictureList.add(PictureScreenItemType.ProfilePicture(it))
                         }
                     }
                 }
@@ -109,7 +110,7 @@ fun GalleryScreen(modifier: Modifier = Modifier) {
                                 }
                         ) {
                             val bitmapImage =
-                                (pictureList[page] as PicturesScreenItemType.ProfilePicture).bitmap.asImageBitmap()
+                                (pictureList[page] as PictureScreenItemType.ProfilePicture).bitmap.asImageBitmap()
                             Image(
                                 bitmap = bitmapImage,
                                 contentDescription = null,
@@ -137,6 +138,11 @@ fun GalleryScreen(modifier: Modifier = Modifier) {
                                 ),
                                 onClick = {
                                     pictureList.remove(pictureList[page])
+                                    pagerPosition = if (page == pictureList.size) {
+                                        page - 1
+                                    } else {
+                                        page
+                                    }
                                 },
                                 drawableRes = R.drawable.ic_trash
                             )
@@ -146,17 +152,16 @@ fun GalleryScreen(modifier: Modifier = Modifier) {
             }
         }
 
-        if (pictureList.isNotEmpty()) {
-            LaunchedEffect(key1 = pictureList.size) {
-                delay(500)  // 임시
-                pagerState.animateScrollToPage(pictureList.size - 1)
+        if (pagerPosition > -1) {
+            LaunchedEffect(key1 = pagerPosition) {
+                pagerState.animateScrollToPage(pagerPosition)
             }
         }
     }
 }
 
 @Composable
-private fun PictureAddScreen(pictureListSize: Int, bitmapList: (List<Bitmap>) -> Unit) {
+private fun AddPictureScreen(pictureListSize: Int, bitmapList: (List<Bitmap>) -> Unit) {
     val context = LocalContext.current
     var selectedImagesUri by remember { mutableStateOf(listOf<Uri>()) }
 
