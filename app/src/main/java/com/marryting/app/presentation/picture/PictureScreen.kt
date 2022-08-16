@@ -14,6 +14,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -52,6 +53,7 @@ import com.marryting.app.R
 import com.marryting.app.component.MarrytingButtonColorSet
 import com.marryting.app.component.MarrytingButtonType
 import com.marryting.app.component.MarrytingIconButton
+import com.marryting.app.component.noRippleClickable
 import com.ui.theme.Color
 import com.ui.theme.DarkColor
 import com.ui.theme.KoreaTypography
@@ -210,7 +212,9 @@ private fun AddPictureScreen(pictureListSize: Int, bitmapList: (List<Bitmap>) ->
             .clip(RoundedCornerShape(16.dp))
             .background(DarkColor.Grey700)
             .border(2.dp, DarkColor.Grey200, RoundedCornerShape(16.dp))
-            .clickable(
+            .noRippleClickable(
+                interactionSource = MutableInteractionSource(),
+                enabled = true,
                 onClick = {
                     requestPermission.launch(
                         arrayOf(
