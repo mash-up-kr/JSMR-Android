@@ -177,7 +177,7 @@ private fun AddPictureScreen(bitmap: (Bitmap) -> Unit) {
                     }
                 }
             } else {
-                Log.e("error", result.error.toString())     // error 처리 필요
+                Log.e("error", result.error.toString()) // error 처리 필요
             }
         }
     )
@@ -191,7 +191,8 @@ private fun AddPictureScreen(bitmap: (Bitmap) -> Unit) {
                         setAspectRatio(3, 4)
                         setFixAspectRatio(true)
                         setCropMenuCropButtonTitle("확인")
-                    })
+                    }
+                )
             }
         }
     )
