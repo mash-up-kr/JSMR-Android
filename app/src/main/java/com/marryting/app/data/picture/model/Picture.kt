@@ -3,8 +3,7 @@ package com.marryting.app.data.picture.model
 import okhttp3.MultipartBody
 
 data class PictureRequest(
-    val fileSize: String,
-    val images: List<MultipartBody.Part>
+    val image: MultipartBody.Part
 )
 
 data class PictureResponse(

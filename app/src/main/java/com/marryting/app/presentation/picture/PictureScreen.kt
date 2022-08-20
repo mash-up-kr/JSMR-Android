@@ -7,7 +7,7 @@ import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
-import android.widget.Toast
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -44,6 +44,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import androidx.core.content.ContextCompat
+import com.canhub.cropper.CropImageContract
+import com.canhub.cropper.options
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.calculateCurrentOffsetForPage
@@ -61,7 +63,7 @@ import kotlin.math.absoluteValue
 @OptIn(ExperimentalPagerApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun PictureScreen(modifier: Modifier = Modifier) {
-    val pictureList = remember { mutableStateListOf<PictureScreenItemType>() }
+    val pictureList = remember { mutableStateListOf<Bitmap>() }
     val pagerState = rememberPagerState()
     var pagerPosition by remember { mutableStateOf(-1) }
 
@@ -79,11 +81,9 @@ fun PictureScreen(modifier: Modifier = Modifier) {
         ) { page ->
             when (page) {
                 pictureList.size -> {
-                    AddPictureScreen(pictureList.size) { bitmapList ->
-                        pagerPosition = pictureList.size + bitmapList.size - 1
-                        bitmapList.forEach {
-                            pictureList.add(PictureScreenItemType.ProfilePicture(it))
-                        }
+                    AddPictureScreen { bitmap ->
+                        pictureList.add(bitmap)
+                        pagerPosition += 1
                     }
                 }
                 else -> {
@@ -110,12 +110,11 @@ fun PictureScreen(modifier: Modifier = Modifier) {
                                     )
                                 }
                         ) {
-                            val bitmapImage =
-                                (pictureList[page] as PictureScreenItemType.ProfilePicture).bitmap.asImageBitmap()
+                            val bitmapImage = pictureList[page].asImageBitmap()
                             Image(
                                 bitmap = bitmapImage,
                                 contentDescription = null,
-                                contentScale = ContentScale.Inside,
+                                contentScale = ContentScale.Crop,
                                 modifier = Modifier
                                     .width(280.dp)
                                     .height(374.dp)
@@ -162,31 +161,38 @@ fun PictureScreen(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun AddPictureScreen(pictureListSize: Int, bitmapList: (List<Bitmap>) -> Unit) {
+private fun AddPictureScreen(bitmap: (Bitmap) -> Unit) {
     val context = LocalContext.current
-    var selectedImagesUri by remember { mutableStateOf(listOf<Uri>()) }
 
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetMultipleContents(),
-        onResult = { uriList ->
-            if (pictureListSize + uriList.size > 5) {
-                Toast.makeText(context, "사진은 최대 5장 선택 가능합니다", Toast.LENGTH_LONG).show()
-                return@rememberLauncherForActivityResult
-            }
-            selectedImagesUri = uriList
-            val newBitmapList = mutableListOf<Bitmap>()
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                selectedImagesUri.forEach { uri ->
-                    val source = ImageDecoder.createSource(context.contentResolver, uri)
-                    newBitmapList.add(ImageDecoder.decodeBitmap(source))
+    val imageCropLauncher = rememberLauncherForActivityResult(
+        contract = CropImageContract(),
+        onResult = { result ->
+            if (result.isSuccessful) {
+                result.uriContent?.let { uri ->
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                        val source = ImageDecoder.createSource(context.contentResolver, uri)
+                        bitmap(ImageDecoder.decodeBitmap(source))
+                    } else {
+                        bitmap(MediaStore.Images.Media.getBitmap(context.contentResolver, uri))
+                    }
                 }
             } else {
-                selectedImagesUri.forEach { uri ->
-                    newBitmapList.add(MediaStore.Images.Media.getBitmap(context.contentResolver, uri))
-                }
+                Log.e("error", result.error.toString())     // error 처리 필요
             }
-            bitmapList(newBitmapList)
+        }
+    )
+
+    val imagePickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent(),
+        onResult = { uri: Uri? ->
+            uri?.let {
+                imageCropLauncher.launch(
+                    options(uri) {
+                        setAspectRatio(3, 4)
+                        setFixAspectRatio(true)
+                        setCropMenuCropButtonTitle("확인")
+                    })
+            }
         }
     )
 
@@ -198,7 +204,7 @@ private fun AddPictureScreen(pictureListSize: Int, bitmapList: (List<Bitmap>) ->
                     context,
                     Manifest.permission.READ_EXTERNAL_STORAGE
                 ) -> {
-                    launcher.launch("image/*")
+                    imagePickerLauncher.launch("image/*")
                 }
             }
         }
