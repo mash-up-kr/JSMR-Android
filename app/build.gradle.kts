@@ -73,4 +73,6 @@ dependencies {
     kapt(libs.hilt.compiler)
 
     implementation(libs.kakao.login)
+
+    implementation(libs.image.cropper)
 }

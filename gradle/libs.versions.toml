@@ -31,6 +31,7 @@ kakaoLogin = "2.10.0"
 moshi = "1.8.0"
 googlePermissions = "0.24.13-rc"
 googlePager = "0.22.0-rc"
+imageCropper = "4.3.1"
 
 
 [libraries]
@@ -83,3 +84,4 @@ moshi-converter = { group = "com.squareup.retrofit2", name = "converter-moshi", 
 spotless-gradlePlugin = { group = "com.diffplug.spotless", name = "spotless-plugin-gradle", version.ref = "spotless" }
 kakao-login = { group = "com.kakao.sdk", name = "v2-user", version.ref = "kakaoLogin" }
 moshi-core = { group = "com.squareup.moshi", name = "moshi", version.ref = "moshi" }
+image-cropper = { group = "com.github.CanHub", name = "Android-Image-Cropper",  version.ref = "imageCropper"}

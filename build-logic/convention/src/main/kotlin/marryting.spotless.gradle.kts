@@ -20,7 +20,7 @@ plugins {
     id("com.diffplug.spotless")
 }
 
-val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
+val libs: VersionCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
 spotless {
     kotlin {

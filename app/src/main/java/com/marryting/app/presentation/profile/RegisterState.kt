@@ -3,7 +3,7 @@ package com.marryting.app.presentation.profile
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.marryting.app.data.profile.RegisterContent
+import com.marryting.app.data.profile.model.RegisterContent
 
 data class RegisterContentState(
     val registerContent: RegisterContent,

@@ -1,7 +1,7 @@
-package com.marryting.app.data.profile
+package com.marryting.app.data.profile.model
 
 data class Questionnaire(
-    val id: Long,
+    val questionId: Long,
     val question: String,
     val answer1: String,
     val answer2: String
@@ -12,7 +12,7 @@ data class QuestionnaireResponse(
     val status: Int
 )
 
-data class QuestionnaireRequest(
+data class QuestionnaireResult(
     val questionId: Long,
     val answer: String
 )

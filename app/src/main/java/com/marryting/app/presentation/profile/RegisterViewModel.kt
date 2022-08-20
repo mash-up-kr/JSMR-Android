@@ -2,7 +2,7 @@ package com.marryting.app.presentation.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.marryting.app.data.profile.RegisterRepository
+import com.marryting.app.data.profile.repository.RegisterRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

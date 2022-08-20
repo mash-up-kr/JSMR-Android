@@ -19,7 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.marryting.app.component.MarrytingRadioGroup
-import com.marryting.app.data.profile.Questionnaire
+import com.marryting.app.data.profile.model.Questionnaire
 import com.ui.theme.Color
 import com.ui.theme.DarkColor
 import com.ui.theme.KoreaTypography
