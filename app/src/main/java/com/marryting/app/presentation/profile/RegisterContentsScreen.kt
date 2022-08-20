@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.marryting.app.component.MarrytingButton
 import com.marryting.app.component.MarrytingButtonColorSet
 import com.marryting.app.component.MarrytingButtonType
-import com.marryting.app.data.profile.ContentViewType
+import com.marryting.app.data.profile.model.ContentViewType
 import com.marryting.app.data.profile.model.Questionnaire
 import com.marryting.app.presentation.picture.PictureScreen
 import com.marryting.app.presentation.profile.component.ProgressIndicator

@@ -1,7 +1,7 @@
 package com.marryting.app.data.profile.repository
 
-import com.marryting.app.data.profile.ContentViewType
-import com.marryting.app.data.profile.RegisterContent
+import com.marryting.app.data.profile.model.ContentViewType
+import com.marryting.app.data.profile.model.RegisterContent
 
 class RegisterRepository {
 
