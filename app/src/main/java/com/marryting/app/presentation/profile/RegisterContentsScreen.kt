@@ -19,7 +19,7 @@ import com.marryting.app.component.MarrytingButton
 import com.marryting.app.component.MarrytingButtonColorSet
 import com.marryting.app.component.MarrytingButtonType
 import com.marryting.app.data.profile.ContentViewType
-import com.marryting.app.data.profile.Questionnaire
+import com.marryting.app.data.profile.model.Questionnaire
 import com.marryting.app.presentation.picture.PictureScreen
 import com.marryting.app.presentation.profile.component.ProgressIndicator
 import com.marryting.app.presentation.profile.component.RegisterContentDescription
@@ -58,33 +58,33 @@ fun RegisterContentsScreen(contents: RegisterState.Contents, onDonePressed: () -
         }
     ) { paddingValues ->
         when (currentContentState.registerContent.contentViewType) {
-            ContentViewType.UserInfoInputs -> {
+            ContentViewType.UserInfo -> {
                 UserInfoScreen(modifier = Modifier.padding(top = paddingValues.calculateTopPadding()))
             }
-            ContentViewType.Pictures -> {
+            ContentViewType.Picture -> {
                 PictureScreen(modifier = Modifier.padding(top = paddingValues.calculateTopPadding()))
             }
-            ContentViewType.Keywords -> {
+            ContentViewType.Keyword -> {
                 KeywordScreen(modifier = Modifier.padding(top = paddingValues.calculateTopPadding()))
             }
-            ContentViewType.Questions -> {
+            ContentViewType.Questionnaire -> {
                 QuestionnaireScreen(
                     modifier = Modifier.padding(top = paddingValues.calculateTopPadding()),
                     questionnaireList = listOf(
                         Questionnaire(
-                            id = 1,
+                            questionId = 1,
                             question = "싸울 때는",
                             answer1 = "생각 정리하고 이야기 할래요",
                             answer2 = "바로 이야기 할래요"
                         ),
                         Questionnaire(
-                            id = 2,
+                            questionId = 2,
                             question = "연락은",
                             answer1 = "가끔 하고 싶어요",
                             answer2 = "자주 하고 싶어요"
                         ),
                         Questionnaire(
-                            id = 3,
+                            questionId = 3,
                             question = "데이트는",
                             answer1 = "계획적인 게 좋아요",
                             answer2 = "즉흥적인 게 좋아요"
