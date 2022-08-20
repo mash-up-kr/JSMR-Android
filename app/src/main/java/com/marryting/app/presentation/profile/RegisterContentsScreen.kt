@@ -19,10 +19,14 @@ import com.marryting.app.component.MarrytingButton
 import com.marryting.app.component.MarrytingButtonColorSet
 import com.marryting.app.component.MarrytingButtonType
 import com.marryting.app.data.profile.ContentViewType
-import com.marryting.app.presentation.picture.GalleryScreen
+import com.marryting.app.data.profile.Questionnaire
+import com.marryting.app.presentation.picture.PictureScreen
 import com.marryting.app.presentation.profile.component.ProgressIndicator
 import com.marryting.app.presentation.profile.component.RegisterContentDescription
 import com.marryting.app.presentation.profile.component.RegisterContentTitle
+import com.marryting.app.presentation.profile.register.KeywordScreen
+import com.marryting.app.presentation.profile.register.QuestionnaireScreen
+import com.marryting.app.presentation.profile.register.UserInfoScreen
 import com.ui.theme.Color
 import com.ui.theme.DarkColor
 
@@ -54,8 +58,39 @@ fun RegisterContentsScreen(contents: RegisterState.Contents, onDonePressed: () -
         }
     ) { paddingValues ->
         when (currentContentState.registerContent.contentViewType) {
+            ContentViewType.UserInfoInputs -> {
+                UserInfoScreen(modifier = Modifier.padding(top = paddingValues.calculateTopPadding()))
+            }
             ContentViewType.Pictures -> {
-                GalleryScreen(modifier = Modifier.padding(top = paddingValues.calculateTopPadding()))
+                PictureScreen(modifier = Modifier.padding(top = paddingValues.calculateTopPadding()))
+            }
+            ContentViewType.Keywords -> {
+                KeywordScreen(modifier = Modifier.padding(top = paddingValues.calculateTopPadding()))
+            }
+            ContentViewType.Questions -> {
+                QuestionnaireScreen(
+                    modifier = Modifier.padding(top = paddingValues.calculateTopPadding()),
+                    questionnaireList = listOf(
+                        Questionnaire(
+                            id = 1,
+                            question = "싸울 때는",
+                            answer1 = "생각 정리하고 이야기 할래요",
+                            answer2 = "바로 이야기 할래요"
+                        ),
+                        Questionnaire(
+                            id = 2,
+                            question = "연락은",
+                            answer1 = "가끔 하고 싶어요",
+                            answer2 = "자주 하고 싶어요"
+                        ),
+                        Questionnaire(
+                            id = 3,
+                            question = "데이트는",
+                            answer1 = "계획적인 게 좋아요",
+                            answer2 = "즉흥적인 게 좋아요"
+                        )
+                    )
+                )
             }
         }
     }
@@ -102,11 +137,13 @@ private fun RegisterBottomBar(contentState: RegisterContentState, onPreviousPres
                     buttonType = MarrytingButtonType.LeftArrow(
                         activeColorSet = MarrytingButtonColorSet(
                             contentColor = DarkColor.Grey200,
-                            backgroundColor = DarkColor.Grey700
+                            backgroundColor = DarkColor.Grey700,
+                            arrowColor = DarkColor.Grey200
                         ),
                         pressedColorSet = MarrytingButtonColorSet(
                             contentColor = Color.White,
-                            backgroundColor = DarkColor.Grey600
+                            backgroundColor = DarkColor.Grey600,
+                            arrowColor = Color.White
                         )
                     ),
                     onClick = onPreviousPressed
