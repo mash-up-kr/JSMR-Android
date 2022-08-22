@@ -8,11 +8,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.sp
+import com.marryting.app.component.setWithStyle
 import com.ui.theme.DarkColor
+import com.ui.theme.KoreaTypography
 import com.ui.theme.LightColor
 
 @Composable
@@ -21,26 +25,12 @@ fun RegisterContentTitle(modifier: Modifier = Modifier, title: List<String>) {
         Text(
             buildAnnotatedString {
                 withStyle(style = ParagraphStyle(lineHeight = 33.6.sp)) {
-                    setWithStyle(Color.White, title[0])
-                    setWithStyle(DarkColor.SubGreen, title[1])
-                    setWithStyle(Color.White, title[2])
+                    setWithStyle(Color.White, KoreaTypography.headline3, title[0])
+                    setWithStyle(DarkColor.SubGreen, KoreaTypography.headline3, title[1])
+                    setWithStyle(Color.White, KoreaTypography.headline3, title[2])
                 }
             }
         )
-    }
-}
-
-private fun AnnotatedString.Builder.setWithStyle(color: Color, title: String) {
-    fun getSpanStyle(color: Color): SpanStyle = SpanStyle(
-        fontWeight = FontWeight.Bold,
-        color = color,
-        fontSize = 24.sp
-    )
-
-    withStyle(
-        style = getSpanStyle(color)
-    ) {
-        append(title)
     }
 }
 
