@@ -29,10 +29,11 @@ import com.marryting.app.presentation.profile.register.QuestionnaireScreen
 import com.marryting.app.presentation.profile.register.UserInfoScreen
 import com.ui.theme.Color
 import com.ui.theme.DarkColor
+import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegisterContentsScreen(contents: RegisterState.Contents, onDonePressed: () -> Unit) {
+fun RegisterContentsScreen(contents: RegisterState.Contents, getProfileInfoName: String?, setProfileInfoName: (String) -> Unit, getProfileInfoGender: String?, setProfileInfoGender: (String) -> Unit, getProfileInfoBirth: Date?, setProfileInfoBirth: (Date) -> Unit, getProfileInfoAddress: String?, setProfileInfoAddress: (String) -> Unit, getProfileInfoCareer: String?, setProfileInfoCareer: (String) -> Unit, onDonePressed: () -> Unit) {
     val currentContentState = remember(contents.currentContentIndex) {
         contents.registerContentsState[contents.currentContentIndex]
     }
@@ -59,7 +60,19 @@ fun RegisterContentsScreen(contents: RegisterState.Contents, onDonePressed: () -
     ) { paddingValues ->
         when (currentContentState.registerContent.contentViewType) {
             ContentViewType.UserInfo -> {
-                UserInfoScreen(modifier = Modifier.padding(top = paddingValues.calculateTopPadding()))
+                UserInfoScreen(
+                    modifier = Modifier.padding(top = paddingValues.calculateTopPadding()),
+                    getProfileInfoName = getProfileInfoName,
+                    setProfileInfoName = setProfileInfoName,
+                    getProfileInfoGender = getProfileInfoGender,
+                    setProfileInfoGender = setProfileInfoGender,
+                    getProfileInfoBirth = getProfileInfoBirth,
+                    setProfileInfoBirth = setProfileInfoBirth,
+                    getProfileInfoAddress = getProfileInfoAddress,
+                    setProfileInfoAddress = setProfileInfoAddress,
+                    getProfileInfoCareer = getProfileInfoCareer,
+                    setProfileInfoCareer = setProfileInfoCareer
+                )
             }
             ContentViewType.Picture -> {
                 PictureScreen(modifier = Modifier.padding(top = paddingValues.calculateTopPadding()))

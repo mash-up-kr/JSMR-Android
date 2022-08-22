@@ -2,22 +2,31 @@ package com.marryting.app.presentation.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.marryting.app.data.profile.model.ProfileInfo
 import com.marryting.app.data.profile.repository.RegisterRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.util.*
+import javax.inject.Inject
 
-// @HiltViewModel
-class RegisterViewModel() : ViewModel() {
+@HiltViewModel
+class RegisterViewModel @Inject constructor(
+    private val registerRepository: RegisterRepository
+) : ViewModel() {
 
     private val _uiState: MutableStateFlow<RegisterState> = MutableStateFlow(RegisterState.Loading)
     val uiState: StateFlow<RegisterState>
         get() = _uiState.asStateFlow()
 
+    private val _profileInfo: MutableStateFlow<ProfileInfo> = MutableStateFlow(ProfileInfo())
+    val profileInfo: StateFlow<ProfileInfo>
+        get() = _profileInfo.asStateFlow()
+
     init {
         viewModelScope.launch {
-            val registerRepository = RegisterRepository()
             val registerContents = registerRepository.getRegisterContents()
 
 //            val contentViewType = registerContents[0].contentViewType
@@ -35,6 +44,38 @@ class RegisterViewModel() : ViewModel() {
                 )
             }
             _uiState.value = RegisterState.Contents(contents)
+        }
+    }
+
+    fun profileInfoState() = _profileInfo
+
+    fun setProfileInfoName(name: String) {
+        viewModelScope.launch {
+            _profileInfo.emit(_profileInfo.value.copy(name = name))
+        }
+    }
+
+    fun setProfileInfoGender(gender: String) {
+        viewModelScope.launch {
+            _profileInfo.emit(_profileInfo.value.copy(gender = gender))
+        }
+    }
+
+    fun setProfileInfoBirth(birth: Date) {
+        viewModelScope.launch {
+            _profileInfo.emit(_profileInfo.value.copy(birth = birth))
+        }
+    }
+
+    fun setProfileInfoAddress(address: String) {
+        viewModelScope.launch {
+            _profileInfo.emit(_profileInfo.value.copy(address = address))
+        }
+    }
+
+    fun setProfileInfoCareer(career: String) {
+        viewModelScope.launch {
+            _profileInfo.emit(_profileInfo.value.copy(career = career))
         }
     }
 

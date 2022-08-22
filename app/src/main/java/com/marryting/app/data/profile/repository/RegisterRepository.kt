@@ -1,10 +1,15 @@
 package com.marryting.app.data.profile.repository
 
+import com.marryting.app.data.profile.api.ProfileApi
 import com.marryting.app.data.profile.model.ContentViewType
 import com.marryting.app.data.profile.model.RegisterContent
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class RegisterRepository {
-
+@Singleton
+class RegisterRepository @Inject constructor(
+    private val profileApi: ProfileApi
+) {
     fun getRegisterContents(): List<RegisterContent> = listOf(
         RegisterContent(
             id = 0,
