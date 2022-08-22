@@ -9,35 +9,28 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.ParagraphStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.marryting.app.R
 import com.marryting.app.component.MarrytingButton
 import com.marryting.app.component.MarrytingButtonColorSet
 import com.marryting.app.component.MarrytingButtonType
 import com.marryting.app.component.MarrytingResultText
-import com.marryting.app.component.setWithStyle
 import com.ui.theme.Color
 import com.ui.theme.DarkColor
-import com.ui.theme.EnglishTypography
 import com.ui.theme.KoreaTypography
 import com.ui.theme.LightColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegisterResultScreen() {
-
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
@@ -71,14 +64,13 @@ fun RegisterResultScreen() {
                         contentDescription = null
                     )
                 }
-                
             }
         }
     }
 }
 
-//@Composable
-//private fun RegisterResultLottie(modifier: Modifier = Modifier) {
+// @Composable
+// private fun RegisterResultLottie(modifier: Modifier = Modifier) {
 //    val composition by rememberLottieComposition(
 //        LottieCompositionSpec.RawRes(R.raw)
 //    )
@@ -93,7 +85,7 @@ fun RegisterResultScreen() {
 //            iterations = LottieConstants.IterateForever
 //        )
 //    }
-//}
+// }
 
 @Composable
 private fun RegisterResultBottomBar() {
@@ -125,7 +117,7 @@ private fun RegisterResultBottomBar() {
                         backgroundColor = DarkColor.Grey300
                     )
                 ),
-                onClick = {  }
+                onClick = { }
             )
         }
     }
