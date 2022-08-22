@@ -45,8 +45,10 @@ fun RegisterResultScreen() {
                 modifier = Modifier.padding(start = 32.dp, top = 40.dp)
             ) {
                 MarrytingResultText(
-                    name = "박우인",
-                    resultText = "님을 이렇게 소개할게요.\n" + "메리팅을 찾으러 가볼까요?"
+                    titleMainColorText = "Nice!\n",
+                    titleBackgroundColorText = "Completed",
+                    contentName = "박우인",
+                    contentResultText = "님을 이렇게 소개할게요.\n" + "메리팅을 찾으러 가볼까요?"
                 )
 
                 Row(

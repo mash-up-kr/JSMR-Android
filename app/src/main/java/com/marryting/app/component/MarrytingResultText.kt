@@ -19,15 +19,15 @@ import com.ui.theme.KoreaTypography
 import com.ui.theme.LightColor
 
 @Composable
-fun MarrytingResultText(modifier: Modifier = Modifier, name: String, resultText: String) {
+fun MarrytingResultText(modifier: Modifier = Modifier, titleMainColorText: String = "", titleBackgroundColorText: String, contentName: String = "", contentResultText: String = "", contentResultList: List<String> = emptyList()) {
     Column(
         modifier = modifier
     ) {
         Text(
             buildAnnotatedString {
                 withStyle(style = ParagraphStyle(lineHeight = 40.8.sp)) {
-                    setWithStyle(LightColor.Main300, EnglishTypography.headline2, "Nice!\n")
-                    setWithStyle(Color.DarkBackground, EnglishTypography.headline2, "Completed")
+                    setWithStyle(LightColor.Main300, EnglishTypography.headline2, titleMainColorText)
+                    setWithStyle(Color.DarkBackground, EnglishTypography.headline2, titleBackgroundColorText)
                 }
             }
         )
@@ -35,8 +35,14 @@ fun MarrytingResultText(modifier: Modifier = Modifier, name: String, resultText:
         Text(
             buildAnnotatedString {
                 withStyle(style = ParagraphStyle(lineHeight = 30.sp)) {
-                    setWithStyle(LightColor.Grey500, KoreaTypography.headline4, name)
-                    setWithStyle(LightColor.Grey500, KoreaTypography.headline4, resultText)
+                    setWithStyle(LightColor.Grey500, KoreaTypography.headline4, contentName)
+                    if (contentResultText.isNotEmpty()) {
+                        setWithStyle(LightColor.Grey500, KoreaTypography.headline4, contentResultText)
+                    } else {
+                        setWithStyle(LightColor.Grey500, KoreaTypography.headline4, contentResultList[0])
+                        setWithStyle(LightColor.Main300, KoreaTypography.headline4, contentResultList[1])
+                        setWithStyle(LightColor.Grey500, KoreaTypography.headline4, contentResultList[2])
+                    }
                 }
             },
             modifier = Modifier.padding(top = 10.dp)
