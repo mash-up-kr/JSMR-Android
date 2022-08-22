@@ -26,8 +26,8 @@ fun MarrytingResultText(modifier: Modifier = Modifier, name: String, resultText:
         Text(
             buildAnnotatedString {
                 withStyle(style = ParagraphStyle(lineHeight = 40.8.sp)) {
-                    setWithStyle(LightColor.Main300, EnglishTypography.headline2,"Nice!\n")
-                    setWithStyle(Color.DarkBackground, EnglishTypography.headline2,"Completed")
+                    setWithStyle(LightColor.Main300, EnglishTypography.headline2, "Nice!\n")
+                    setWithStyle(Color.DarkBackground, EnglishTypography.headline2, "Completed")
                 }
             }
         )

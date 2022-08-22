@@ -1,6 +1,5 @@
 package com.marryting.app.di
 
-import com.marryting.app.data.picture.api.PictureApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
