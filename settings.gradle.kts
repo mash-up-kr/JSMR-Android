@@ -13,6 +13,7 @@ dependencyResolutionManagement {
         mavenCentral()
         maven(url = "https://devrepo.kakao.com/nexus/content/groups/public/")
         maven(url = "https://jitpack.io" )
+        maven(url = "https://oss.sonatype.org/content/repositories/snapshots/")
     }
 }
 rootProject.name = "Marryting"
