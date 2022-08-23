@@ -2,7 +2,9 @@ package com.marryting.app.presentation.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.marryting.app.data.profile.model.Keyword
 import com.marryting.app.data.profile.model.ProfileInfo
+import com.marryting.app.data.profile.model.QuestionnaireResult
 import com.marryting.app.data.profile.repository.RegisterRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -76,6 +78,28 @@ class RegisterViewModel @Inject constructor(
     fun setProfileInfoCareer(career: String) {
         viewModelScope.launch {
             _profileInfo.emit(_profileInfo.value.copy(career = career))
+        }
+    }
+
+    fun addProfileInfoKeyword(keyword: Keyword) {
+        viewModelScope.launch {
+            _profileInfo.emit(_profileInfo.value.copy(keywords = _profileInfo.value.keywords + keyword))
+        }
+    }
+
+    fun removeProfileInfoKeyword(keyword: Keyword) {
+        viewModelScope.launch {
+            _profileInfo.emit(
+                _profileInfo.value.copy(
+                    keywords = _profileInfo.value.keywords.toMutableList().also { it.remove(keyword) }
+                )
+            )
+        }
+    }
+
+    fun setProfileInfoAnswers(answers: List<QuestionnaireResult>) {
+        viewModelScope.launch {
+            _profileInfo.emit(_profileInfo.value.copy(answers = answers))
         }
     }
 

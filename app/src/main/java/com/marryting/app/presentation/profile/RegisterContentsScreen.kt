@@ -19,7 +19,9 @@ import com.marryting.app.component.MarrytingButton
 import com.marryting.app.component.MarrytingButtonColorSet
 import com.marryting.app.component.MarrytingButtonType
 import com.marryting.app.data.profile.model.ContentViewType
+import com.marryting.app.data.profile.model.Keyword
 import com.marryting.app.data.profile.model.Questionnaire
+import com.marryting.app.data.profile.model.QuestionnaireResult
 import com.marryting.app.presentation.picture.PictureScreen
 import com.marryting.app.presentation.profile.component.ProgressIndicator
 import com.marryting.app.presentation.profile.component.RegisterContentDescription
@@ -33,7 +35,25 @@ import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegisterContentsScreen(contents: RegisterState.Contents, getProfileInfoName: String?, setProfileInfoName: (String) -> Unit, getProfileInfoGender: String?, setProfileInfoGender: (String) -> Unit, getProfileInfoBirth: Date?, setProfileInfoBirth: (Date) -> Unit, getProfileInfoAddress: String?, setProfileInfoAddress: (String) -> Unit, getProfileInfoCareer: String?, setProfileInfoCareer: (String) -> Unit, onDonePressed: () -> Unit) {
+fun RegisterContentsScreen(
+    contents: RegisterState.Contents,
+    getProfileInfoName: String?,
+    setProfileInfoName: (String) -> Unit,
+    getProfileInfoGender: String?,
+    setProfileInfoGender: (String) -> Unit,
+    getProfileInfoBirth: Date?,
+    setProfileInfoBirth: (Date) -> Unit,
+    getProfileInfoAddress: String?,
+    setProfileInfoAddress: (String) -> Unit,
+    getProfileInfoCareer: String?,
+    setProfileInfoCareer: (String) -> Unit,
+    getProfileInfoKeywords: List<Keyword>?,
+    addProfileInfoKeywords: (Keyword) -> Unit,
+    removeProfileInfoKeyword: (Keyword) -> Unit,
+    getProfileInfoAnswers: List<QuestionnaireResult>?,
+    setProfileInfoAnswers: (List<QuestionnaireResult>) -> Unit,
+    onDonePressed: () -> Unit
+) {
     val currentContentState = remember(contents.currentContentIndex) {
         contents.registerContentsState[contents.currentContentIndex]
     }
@@ -78,7 +98,16 @@ fun RegisterContentsScreen(contents: RegisterState.Contents, getProfileInfoName:
                 PictureScreen(modifier = Modifier.padding(top = paddingValues.calculateTopPadding()))
             }
             ContentViewType.Keyword -> {
-                KeywordScreen(modifier = Modifier.padding(top = paddingValues.calculateTopPadding()))
+                KeywordScreen(
+                    modifier = Modifier.padding(top = paddingValues.calculateTopPadding()),
+                    keywordList = listOf(
+                        Keyword(1, "따듯한"), Keyword(2, "유머있는"), Keyword(3, "다정한"),
+                        Keyword(4, "편안한"), Keyword(5, "친절한")
+                    ),
+                    getProfileInfoKeywords = getProfileInfoKeywords,
+                    addProfileInfoKeywords = addProfileInfoKeywords,
+                    removeProfileInfoKeyword = removeProfileInfoKeyword
+                )
             }
             ContentViewType.Questionnaire -> {
                 QuestionnaireScreen(
