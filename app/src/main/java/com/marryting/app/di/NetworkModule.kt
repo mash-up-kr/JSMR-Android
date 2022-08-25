@@ -28,8 +28,12 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
-        .baseUrl("")
+        .baseUrl(BASE_URL)
         .client(okHttpClient)
         .addConverterFactory(MoshiConverterFactory.create())
         .build()
+
+    companion object {
+        private const val BASE_URL = "http://marrytingserver-env-2.eba-qvmbsp3m.ap-northeast-2.elasticbeanstalk.com/"
+    }
 }

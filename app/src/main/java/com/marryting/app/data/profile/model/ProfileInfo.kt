@@ -3,14 +3,14 @@ package com.marryting.app.data.profile.model
 import java.util.*
 
 data class ProfileInfo(
-    val name: String,
-    val gender: String,
-    val career: String,
-    val birth: Date,
-    val address: String,
-    val pictures: List<String>,
-    val keywords: List<Keyword>,
-    val answers: List<QuestionnaireResult>
+    val name: String? = null,
+    val gender: String? = null,
+    val career: String? = null,
+    val birth: Date? = null,
+    val address: String? = null,
+    val pictures: List<String> = emptyList(),
+    val keywords: List<Keyword> = emptyList(),
+    val answers: List<QuestionnaireResult> = emptyList()
 )
 
 data class ProfileRequest(

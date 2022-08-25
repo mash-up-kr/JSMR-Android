@@ -2,15 +2,27 @@ package com.marryting.app.presentation.profile
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
-fun RegisterScreen(viewModel: RegisterViewModel = viewModel()) { // hiltViewModel()로 변경해야 함
+fun RegisterScreen(viewModel: RegisterViewModel = hiltViewModel()) {
+    val profileInfoState by viewModel.profileInfoState().collectAsState()
 
     when (val state = viewModel.uiState.collectAsState().value) {
         is RegisterState.Contents -> RegisterContentsScreen(
             contents = state,
-            onDonePressed = { viewModel.onDonePressed() }
+            getProfileInfoName = profileInfoState.name,
+            setProfileInfoName = viewModel::setProfileInfoName,
+            getProfileInfoGender = profileInfoState.gender,
+            setProfileInfoGender = viewModel::setProfileInfoGender,
+            getProfileInfoBirth = profileInfoState.birth,
+            setProfileInfoBirth = viewModel::setProfileInfoBirth,
+            getProfileInfoAddress = profileInfoState.address,
+            setProfileInfoAddress = viewModel::setProfileInfoAddress,
+            getProfileInfoCareer = profileInfoState.career,
+            setProfileInfoCareer = viewModel::setProfileInfoCareer,
+            onDonePressed = viewModel::onDonePressed
         )
         is RegisterState.Result -> RegisterResultScreen()
     }

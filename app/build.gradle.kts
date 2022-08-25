@@ -75,4 +75,5 @@ dependencies {
     implementation(libs.kakao.login)
 
     implementation(libs.image.cropper)
+    implementation(libs.lottie)
 }
