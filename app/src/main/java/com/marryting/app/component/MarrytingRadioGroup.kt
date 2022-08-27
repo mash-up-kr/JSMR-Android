@@ -1,7 +1,9 @@
 package com.marryting.app.component
 
+import android.Manifest
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -47,12 +49,12 @@ fun MarrytingRadioGroup(modifier: Modifier = Modifier, items: List<String> = emp
                     .border(1.dp, selectedBorderColor, RoundedCornerShape(8.dp))
                     .background(backgroundColor, RoundedCornerShape(8.dp))
                     .selectable(
+                        indication = null,
+                        interactionSource = MutableInteractionSource(),
                         enabled = true,
                         selected = item == selectedItem,
                         role = Role.RadioButton,
-                        onClick = {
-                            itemSelected(item)
-                        }
+                        onClick = { itemSelected(item) }
                     )
             ) {
                 Row(modifier = Modifier.padding(20.dp)) {
