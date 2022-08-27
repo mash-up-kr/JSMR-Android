@@ -13,7 +13,7 @@ android {
         applicationId = "com.marryting.app"
         minSdk = 23
         targetSdk = 32
-        versionCode = 1
+        versionCode = 4
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -21,7 +21,7 @@ android {
 
     buildTypes {
         val release by getting {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
