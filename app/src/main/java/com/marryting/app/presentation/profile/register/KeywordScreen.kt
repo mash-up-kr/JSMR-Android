@@ -44,9 +44,7 @@ fun KeywordScreen(
                             value = keyword,
                             selectedItemList = getProfileInfoKeywords ?: emptyList(),
                             onSelected = { item ->
-                                if (getProfileInfoKeywords!!.size < 5) {
-                                    addProfileInfoKeywords(item)
-                                }
+                                addProfileInfoKeywords(item)
                             },
                             onCanceled = { item ->
                                 removeProfileInfoKeyword(item)

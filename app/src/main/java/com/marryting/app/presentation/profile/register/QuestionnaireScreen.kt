@@ -20,18 +20,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.marryting.app.component.MarrytingRadioGroup
 import com.marryting.app.data.profile.model.Questionnaire
+import com.marryting.app.data.profile.model.QuestionnaireResult
 import com.ui.theme.Color
 import com.ui.theme.DarkColor
 import com.ui.theme.KoreaTypography
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun QuestionnaireScreen(modifier: Modifier = Modifier, questionnaireList: List<Questionnaire>) {
+fun QuestionnaireScreen(
+    modifier: Modifier = Modifier,
+    questionnaireList: List<Questionnaire>,
+    getProfileInfoAnswersById: (Long) -> String,
+    setProfileInfoAnswers: (Long, String) -> Unit
+) {
     Surface(
         color = Color.DarkBackground,
         modifier = modifier.padding(top = 40.dp, start = 32.dp, end = 32.dp)
     ) {
-        var selectedItemList by remember { mutableStateOf(listOf<String>("", "", "")) }
 
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
@@ -51,9 +56,9 @@ fun QuestionnaireScreen(modifier: Modifier = Modifier, questionnaireList: List<Q
                     )
                     MarrytingRadioGroup(
                         items = listOf(questionnaire.answer1, questionnaire.answer2),
-                        selectedItem = selectedItemList[index],
+                        selectedItem = getProfileInfoAnswersById(questionnaire.questionId),
                         itemSelected = { item ->
-                            selectedItemList = selectedItemList.toMutableList().also { it[index] = item }
+                            setProfileInfoAnswers(index + 1L, item)
                         }
                     )
                 }

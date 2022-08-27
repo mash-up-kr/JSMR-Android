@@ -25,7 +25,7 @@ fun RegisterScreen(viewModel: RegisterViewModel = hiltViewModel()) {
             getProfileInfoKeywords = profileInfoState.keywords,
             addProfileInfoKeywords = viewModel::addProfileInfoKeyword,
             removeProfileInfoKeyword = viewModel::removeProfileInfoKeyword,
-            getProfileInfoAnswers = profileInfoState.answers,
+            getProfileInfoAnswersById = viewModel::getProfileInfoAnswersById,
             setProfileInfoAnswers = viewModel::setProfileInfoAnswers,
             onDonePressed = viewModel::onDonePressed
         )

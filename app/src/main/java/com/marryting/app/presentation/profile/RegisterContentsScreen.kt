@@ -50,8 +50,8 @@ fun RegisterContentsScreen(
     getProfileInfoKeywords: List<Keyword>?,
     addProfileInfoKeywords: (Keyword) -> Unit,
     removeProfileInfoKeyword: (Keyword) -> Unit,
-    getProfileInfoAnswers: List<QuestionnaireResult>?,
-    setProfileInfoAnswers: (List<QuestionnaireResult>) -> Unit,
+    getProfileInfoAnswersById: (Long) -> String,
+    setProfileInfoAnswers: (Long, String) -> Unit,
     onDonePressed: () -> Unit
 ) {
     val currentContentState = remember(contents.currentContentIndex) {
@@ -102,7 +102,7 @@ fun RegisterContentsScreen(
                     modifier = Modifier.padding(top = paddingValues.calculateTopPadding()),
                     keywordList = listOf(
                         Keyword(1, "따듯한"), Keyword(2, "유머있는"), Keyword(3, "다정한"),
-                        Keyword(4, "편안한"), Keyword(5, "친절한")
+                        Keyword(4, "편안한"), Keyword(5, "친절한"), Keyword(6, "몰라")
                     ),
                     getProfileInfoKeywords = getProfileInfoKeywords,
                     addProfileInfoKeywords = addProfileInfoKeywords,
@@ -131,7 +131,9 @@ fun RegisterContentsScreen(
                             answer1 = "계획적인 게 좋아요",
                             answer2 = "즉흥적인 게 좋아요"
                         )
-                    )
+                    ),
+                    getProfileInfoAnswersById = getProfileInfoAnswersById,
+                    setProfileInfoAnswers = setProfileInfoAnswers
                 )
             }
         }

@@ -82,8 +82,10 @@ class RegisterViewModel @Inject constructor(
     }
 
     fun addProfileInfoKeyword(keyword: Keyword) {
-        viewModelScope.launch {
-            _profileInfo.emit(_profileInfo.value.copy(keywords = _profileInfo.value.keywords + keyword))
+        if (_profileInfo.value.keywords.size < 5) {
+            viewModelScope.launch {
+                _profileInfo.emit(_profileInfo.value.copy(keywords = _profileInfo.value.keywords + keyword))
+            }
         }
     }
 
@@ -97,9 +99,30 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
-    fun setProfileInfoAnswers(answers: List<QuestionnaireResult>) {
+    fun getProfileInfoAnswersById(questionId: Long): String {
+        _profileInfo.value.answers.forEach { questionnaireResult ->
+            if (questionnaireResult.questionId == questionId) {
+                return questionnaireResult.answer
+            }
+        }
+        return ""
+    }
+
+    fun setProfileInfoAnswers(questionId: Long, answer: String) {
         viewModelScope.launch {
-            _profileInfo.emit(_profileInfo.value.copy(answers = answers))
+            _profileInfo.emit(
+                _profileInfo.value.copy(
+                    answers = _profileInfo.value.answers.toMutableList().also {
+                        it.forEach { questionnaireResult ->
+                            if (questionnaireResult.questionId == questionId) {
+                                it.remove(questionnaireResult)
+                                return@forEach
+                            }
+                        }
+                        it.add(QuestionnaireResult(questionId, answer))
+                    }
+                )
+            )
         }
     }
 
