@@ -99,13 +99,12 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
+    private fun getQuestionnaireResultById(questionId: Long): QuestionnaireResult? {
+        return _profileInfo.value.answers.find { it.questionId == questionId }
+    }
+
     fun getProfileInfoAnswersById(questionId: Long): String {
-        _profileInfo.value.answers.forEach { questionnaireResult ->
-            if (questionnaireResult.questionId == questionId) {
-                return questionnaireResult.answer
-            }
-        }
-        return ""
+        return getQuestionnaireResultById(questionId)?.answer ?: ""
     }
 
     fun setProfileInfoAnswers(questionId: Long, answer: String) {
@@ -113,11 +112,9 @@ class RegisterViewModel @Inject constructor(
             _profileInfo.emit(
                 _profileInfo.value.copy(
                     answers = _profileInfo.value.answers.toMutableList().also {
-                        it.forEach { questionnaireResult ->
-                            if (questionnaireResult.questionId == questionId) {
-                                it.remove(questionnaireResult)
-                                return@forEach
-                            }
+                        val result = getQuestionnaireResultById(questionId)
+                        if (result != null) {
+                            it.remove(result)
                         }
                         it.add(QuestionnaireResult(questionId, answer))
                     }

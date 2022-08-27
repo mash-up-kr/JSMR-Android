@@ -57,9 +57,7 @@ fun QuestionnaireScreen(
                     MarrytingRadioGroup(
                         items = listOf(questionnaire.answer1, questionnaire.answer2),
                         selectedItem = getProfileInfoAnswersById(questionnaire.questionId),
-                        itemSelected = { item ->
-                            setProfileInfoAnswers(index + 1L, item)
-                        }
+                        itemSelected = { setProfileInfoAnswers(index + 1L, it) }
                     )
                 }
             }

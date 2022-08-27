@@ -43,12 +43,8 @@ fun KeywordScreen(
                         MarrytingKeyword(
                             value = keyword,
                             selectedItemList = getProfileInfoKeywords ?: emptyList(),
-                            onSelected = { item ->
-                                addProfileInfoKeywords(item)
-                            },
-                            onCanceled = { item ->
-                                removeProfileInfoKeyword(item)
-                            }
+                            onSelected = { addProfileInfoKeywords(it) },
+                            onCanceled = { removeProfileInfoKeyword(it) }
                         )
                     }
                 }
