@@ -1,6 +1,7 @@
 package com.marryting.app.presentation.profile
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,7 +14,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import com.marryting.app.component.MarrytingButton
 import com.marryting.app.component.MarrytingButtonColorSet
@@ -21,7 +25,6 @@ import com.marryting.app.component.MarrytingButtonType
 import com.marryting.app.data.profile.model.ContentViewType
 import com.marryting.app.data.profile.model.Keyword
 import com.marryting.app.data.profile.model.Questionnaire
-import com.marryting.app.data.profile.model.QuestionnaireResult
 import com.marryting.app.presentation.picture.PictureScreen
 import com.marryting.app.presentation.profile.component.ProgressIndicator
 import com.marryting.app.presentation.profile.component.RegisterContentDescription
@@ -33,20 +36,24 @@ import com.ui.theme.Color
 import com.ui.theme.DarkColor
 import java.util.*
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun RegisterContentsScreen(
     contents: RegisterState.Contents,
+    setUserInfoState: (String, UserInfoTextFieldState) -> Unit,
     getProfileInfoName: String?,
     setProfileInfoName: (String) -> Unit,
+    getUserInfoNameState: UserInfoTextFieldState,
     getProfileInfoGender: String?,
     setProfileInfoGender: (String) -> Unit,
     getProfileInfoBirth: Date?,
     setProfileInfoBirth: (Date) -> Unit,
     getProfileInfoAddress: String?,
     setProfileInfoAddress: (String) -> Unit,
+    getUserInfoAddressState: UserInfoTextFieldState,
     getProfileInfoCareer: String?,
     setProfileInfoCareer: (String) -> Unit,
+    getUserInfoCareerState: UserInfoTextFieldState,
     getProfileInfoKeywords: List<Keyword>?,
     addProfileInfoKeywords: (Keyword) -> Unit,
     removeProfileInfoKeyword: (Keyword) -> Unit,
@@ -58,10 +65,17 @@ fun RegisterContentsScreen(
         contents.registerContentsState[contents.currentContentIndex]
     }
 
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val focusManager = LocalFocusManager.current
+
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.DarkBackground),
+            .background(Color.DarkBackground)
+            .clickable {
+                keyboardController?.hide()
+                focusManager.clearFocus(true)
+            },
         containerColor = Color.DarkBackground,
         topBar = {
             RegisterTopBar(
@@ -82,16 +96,20 @@ fun RegisterContentsScreen(
             ContentViewType.UserInfo -> {
                 UserInfoScreen(
                     modifier = Modifier.padding(top = paddingValues.calculateTopPadding()),
+                    setUserInfoState = setUserInfoState,
                     getProfileInfoName = getProfileInfoName,
                     setProfileInfoName = setProfileInfoName,
+                    getUserInfoNameState = getUserInfoNameState,
                     getProfileInfoGender = getProfileInfoGender,
                     setProfileInfoGender = setProfileInfoGender,
                     getProfileInfoBirth = getProfileInfoBirth,
                     setProfileInfoBirth = setProfileInfoBirth,
                     getProfileInfoAddress = getProfileInfoAddress,
                     setProfileInfoAddress = setProfileInfoAddress,
+                    getUserInfoAddressState = getUserInfoAddressState,
                     getProfileInfoCareer = getProfileInfoCareer,
-                    setProfileInfoCareer = setProfileInfoCareer
+                    setProfileInfoCareer = setProfileInfoCareer,
+                    getUserInfoCareerState = getUserInfoCareerState
                 )
             }
             ContentViewType.Picture -> {
@@ -101,8 +119,12 @@ fun RegisterContentsScreen(
                 KeywordScreen(
                     modifier = Modifier.padding(top = paddingValues.calculateTopPadding()),
                     keywordList = listOf(
-                        Keyword(1, "따듯한"), Keyword(2, "유머있는"), Keyword(3, "다정한"),
-                        Keyword(4, "편안한"), Keyword(5, "친절한"), Keyword(6, "몰라")
+                        Keyword(1, "따듯한"),
+                        Keyword(2, "유머있는"),
+                        Keyword(3, "다정한"),
+                        Keyword(4, "편안한"),
+                        Keyword(5, "친절한"),
+                        Keyword(6, "몰라")
                     ),
                     getProfileInfoKeywords = getProfileInfoKeywords,
                     addProfileInfoKeywords = addProfileInfoKeywords,

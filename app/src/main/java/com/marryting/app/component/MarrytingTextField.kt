@@ -6,38 +6,38 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.marryting.app.R
-import com.marryting.app.presentation.profile.register.UserInfoItemState
+import com.marryting.app.presentation.profile.UserInfoTextFieldState
 import com.ui.theme.Color
 import com.ui.theme.DarkColor
 import com.ui.theme.KoreaTypography
 
 @Composable
-fun Container(modifier: Modifier = Modifier, state: UserInfoItemState, label: String, containerItem: @Composable () -> Unit) {
+fun Container(modifier: Modifier = Modifier, state: UserInfoTextFieldState, label: String, containerItem: @Composable () -> Unit) {
     Box(
         modifier = modifier
-            .height(79.dp)
+            .heightIn(min = 79.dp)
             .fillMaxWidth()
             .then(
                 when (state) {
-                    UserInfoItemState.BASIC -> Modifier
+                    UserInfoTextFieldState.Default() -> Modifier
                     else -> Modifier.border(1.dp, state.color, RoundedCornerShape(8.dp))
                 }
             )
@@ -56,9 +56,22 @@ fun Container(modifier: Modifier = Modifier, state: UserInfoItemState, label: St
 }
 
 @Composable
-fun MarrytingTextField(modifier: Modifier = Modifier, value: String, onValueChanged: (String) -> Unit, onValueClear: () -> Unit, state: UserInfoItemState, label: String, placeholder: String) {
+fun MarrytingTextField(modifier: Modifier = Modifier, setUserInfoState: (String, UserInfoTextFieldState) -> Unit, value: String, onValueChanged: (String) -> Unit, onValueClear: () -> Unit, state: UserInfoTextFieldState, label: String, placeholder: String) {
     Column(
-        modifier = modifier
+        modifier = modifier.fillMaxWidth().onFocusChanged { focusState ->
+            setUserInfoState(
+                label,
+                if (state == UserInfoTextFieldState.Error()) {
+                    state
+                } else {
+                    if (focusState.isFocused) {
+                        UserInfoTextFieldState.Active()
+                    } else {
+                        UserInfoTextFieldState.Default()
+                    }
+                }
+            )
+        }
     ) {
         Container(state = state, label = label) {
             TextFieldItem(
@@ -70,22 +83,21 @@ fun MarrytingTextField(modifier: Modifier = Modifier, value: String, onValueChan
             )
         }
 
-        if (state == UserInfoItemState.ERROR) {
-            Box(
-                modifier = Modifier.padding(top = 4.dp, start = 20.dp, end = 20.dp)
-            ) {
-                Text(
-                    text = "error message",
-                    style = KoreaTypography.caption,
-                    color = state.color
-                )
-            }
+        if (state == UserInfoTextFieldState.Error()) {
+            Text(
+                modifier = Modifier.padding(top = 4.dp, start = 20.dp, end = 20.dp),
+                text = "error message",
+                style = KoreaTypography.caption,
+                color = state.color
+            )
         }
     }
 }
 
 @Composable
-fun TextFieldItem(value: String, onValueChanged: (String) -> Unit, onValueClear: () -> Unit, state: UserInfoItemState, placeholder: String) {
+private fun TextFieldItem(value: String, onValueChanged: (String) -> Unit, onValueClear: () -> Unit, state: UserInfoTextFieldState, placeholder: String) {
+    val focusManager = LocalFocusManager.current
+
     Box {
         BasicTextField(
             modifier = Modifier.fillMaxWidth(),
@@ -95,6 +107,10 @@ fun TextFieldItem(value: String, onValueChanged: (String) -> Unit, onValueClear:
             maxLines = 1,
             singleLine = true,
             cursorBrush = SolidColor(DarkColor.Grey400),
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            keyboardActions = KeyboardActions(onDone = {
+                focusManager.clearFocus()
+            }),
             decorationBox = { innerTextField ->
                 if (value.isEmpty()) {
                     PlaceHolder(placeholder = placeholder, color = DarkColor.Grey400)
@@ -108,7 +124,7 @@ fun TextFieldItem(value: String, onValueChanged: (String) -> Unit, onValueClear:
                 modifier = Modifier.align(Alignment.CenterEnd)
             ) {
                 when (state) {
-                    UserInfoItemState.ERROR -> ErrorIcon()
+                    UserInfoTextFieldState.Error() -> ErrorIcon()
                     else -> CloseButton { onValueClear() }
                 }
             }
@@ -127,7 +143,7 @@ fun PlaceHolder(modifier: Modifier = Modifier, placeholder: String, color: andro
 }
 
 @Composable
-fun CloseButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
+private fun CloseButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
     Box(
         modifier = modifier.clickable { onClick() }
     ) {
@@ -140,24 +156,10 @@ fun CloseButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
 }
 
 @Composable
-fun ErrorIcon() {
+private fun ErrorIcon() {
     Icon(
         painter = painterResource(id = R.drawable.ic_error),
         contentDescription = null,
         tint = DarkColor.ErrorRed
-    )
-}
-
-@Preview
-@Composable
-fun Prev() {
-    var text by remember { mutableStateOf("") }
-    MarrytingTextField(
-        value = text,
-        onValueChanged = { if (text.length <= 5) text = it },
-        onValueClear = { text = "" },
-        state = UserInfoItemState.ERROR,
-        label = "이름",
-        placeholder = "이름을 입력해주세요"
     )
 }

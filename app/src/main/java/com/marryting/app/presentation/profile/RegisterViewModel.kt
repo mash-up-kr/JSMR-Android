@@ -27,6 +27,10 @@ class RegisterViewModel @Inject constructor(
     val profileInfo: StateFlow<ProfileInfo>
         get() = _profileInfo.asStateFlow()
 
+    private val _userInfoState: MutableStateFlow<UserInfoState> = MutableStateFlow(UserInfoState())
+    val userInfoState: StateFlow<UserInfoState>
+        get() = _userInfoState.asStateFlow()
+
     init {
         viewModelScope.launch {
             val registerContents = registerRepository.getRegisterContents()
@@ -50,9 +54,36 @@ class RegisterViewModel @Inject constructor(
     }
 
     fun profileInfoState() = _profileInfo
+    fun userInfoState() = _userInfoState
 
+    fun setUserInfoState(stateName: String, state: UserInfoTextFieldState) {
+        viewModelScope.launch {
+            when (stateName) {
+                "이름" -> _userInfoState.emit(_userInfoState.value.copy(nameState = state))
+                "직업" -> _userInfoState.emit(_userInfoState.value.copy(careerState = state))
+                "사는 곳" -> _userInfoState.emit(_userInfoState.value.copy(addressState = state))
+            }
+        }
+    }
+
+    private fun setUserInfoStateByCondition(conditionLength: Int, currentLength: Int, type: String) {
+        viewModelScope.launch {
+            if (currentLength >= conditionLength) {
+                setUserInfoState(type, UserInfoTextFieldState.Error())
+            } else {
+                setUserInfoState(type, UserInfoTextFieldState.Active())
+            }
+        }
+    }
+
+    // UserInfo
     fun setProfileInfoName(name: String) {
         viewModelScope.launch {
+            setUserInfoStateByCondition(
+                conditionLength = 5,
+                currentLength = name.length,
+                type = "이름"
+            )
             _profileInfo.emit(_profileInfo.value.copy(name = name))
         }
     }
@@ -71,16 +102,27 @@ class RegisterViewModel @Inject constructor(
 
     fun setProfileInfoAddress(address: String) {
         viewModelScope.launch {
+            setUserInfoStateByCondition(
+                conditionLength = 10,
+                currentLength = address.length,
+                type = "사는 곳"
+            )
             _profileInfo.emit(_profileInfo.value.copy(address = address))
         }
     }
 
     fun setProfileInfoCareer(career: String) {
         viewModelScope.launch {
+            setUserInfoStateByCondition(
+                conditionLength = 10,
+                currentLength = career.length,
+                type = "직업"
+            )
             _profileInfo.emit(_profileInfo.value.copy(career = career))
         }
     }
 
+    // Keyword
     fun addProfileInfoKeyword(keyword: Keyword) {
         if (_profileInfo.value.keywords.size < 5) {
             viewModelScope.launch {
@@ -99,6 +141,7 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
+    // Questionnaire
     private fun getQuestionnaireResultById(questionId: Long): QuestionnaireResult? {
         return _profileInfo.value.answers.find { it.questionId == questionId }
     }
@@ -123,6 +166,7 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
+    // Done
     fun onDonePressed() {
         _uiState.value = RegisterState.Result(description = "done")
     }
