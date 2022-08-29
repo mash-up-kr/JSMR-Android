@@ -15,13 +15,7 @@ import com.marryting.app.data.profile.model.Keyword
 import com.ui.theme.Color
 
 @Composable
-fun KeywordScreen(
-    modifier: Modifier = Modifier,
-    keywordList: List<Keyword>,
-    getProfileInfoKeywords: List<Keyword>?,
-    addProfileInfoKeywords: (Keyword) -> Unit,
-    removeProfileInfoKeyword: (Keyword) -> Unit
-) {
+fun KeywordScreen(modifier: Modifier = Modifier, keywordList: List<Keyword>, getProfileInfoKeywords: List<Keyword>?, addProfileInfoKeywords: (Keyword) -> Unit, removeProfileInfoKeyword: (Keyword) -> Unit) {
     Surface(
         color = Color.DarkBackground,
         modifier = modifier.padding(top = 40.dp)
@@ -57,7 +51,6 @@ fun KeywordScreen(
                     2
                 }
             }
-
         }
     }
 }
