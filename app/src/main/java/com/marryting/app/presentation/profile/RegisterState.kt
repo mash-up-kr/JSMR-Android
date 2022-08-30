@@ -41,7 +41,7 @@ sealed class UserInfoTextFieldState(
     open val message: String = ""
 ) {
     data class Default(
-        override val color: Color = DarkColor.Grey400,
+        override val color: Color = DarkColor.Grey400
     ) : UserInfoTextFieldState(color)
 
     data class Active(

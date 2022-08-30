@@ -1,7 +1,7 @@
 package com.marryting.app.presentation.profile
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.marryting.app.component.MarrytingButton
 import com.marryting.app.component.MarrytingButtonColorSet
 import com.marryting.app.component.MarrytingButtonType
+import com.marryting.app.component.noRippleClickable
 import com.marryting.app.data.profile.model.ContentViewType
 import com.marryting.app.data.profile.model.Keyword
 import com.marryting.app.data.profile.model.Questionnaire
@@ -72,10 +73,14 @@ fun RegisterContentsScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.DarkBackground)
-            .clickable {
-                keyboardController?.hide()
-                focusManager.clearFocus(true)
-            },
+            .noRippleClickable(
+                interactionSource = MutableInteractionSource(),
+                enabled = true,
+                onClick = {
+                    keyboardController?.hide()
+                    focusManager.clearFocus(true)
+                }
+            ),
         containerColor = Color.DarkBackground,
         topBar = {
             RegisterTopBar(
