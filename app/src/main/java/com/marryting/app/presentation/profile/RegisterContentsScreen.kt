@@ -1,6 +1,7 @@
 package com.marryting.app.presentation.profile
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,12 +14,17 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import com.marryting.app.component.MarrytingButton
 import com.marryting.app.component.MarrytingButtonColorSet
 import com.marryting.app.component.MarrytingButtonType
+import com.marryting.app.component.noRippleClickable
 import com.marryting.app.data.profile.model.ContentViewType
+import com.marryting.app.data.profile.model.Keyword
 import com.marryting.app.data.profile.model.Questionnaire
 import com.marryting.app.presentation.picture.PictureScreen
 import com.marryting.app.presentation.profile.component.ProgressIndicator
@@ -31,17 +37,50 @@ import com.ui.theme.Color
 import com.ui.theme.DarkColor
 import java.util.*
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
-fun RegisterContentsScreen(contents: RegisterState.Contents, getProfileInfoName: String?, setProfileInfoName: (String) -> Unit, getProfileInfoGender: String?, setProfileInfoGender: (String) -> Unit, getProfileInfoBirth: Date?, setProfileInfoBirth: (Date) -> Unit, getProfileInfoAddress: String?, setProfileInfoAddress: (String) -> Unit, getProfileInfoCareer: String?, setProfileInfoCareer: (String) -> Unit, onDonePressed: () -> Unit) {
+fun RegisterContentsScreen(
+    contents: RegisterState.Contents,
+    setUserInfoState: (String, UserInfoTextFieldState) -> Unit,
+    getProfileInfoName: String?,
+    setProfileInfoName: (String) -> Unit,
+    getUserInfoNameState: UserInfoTextFieldState,
+    getProfileInfoGender: String?,
+    setProfileInfoGender: (String) -> Unit,
+    getProfileInfoBirth: Date?,
+    setProfileInfoBirth: (Date) -> Unit,
+    getProfileInfoAddress: String?,
+    setProfileInfoAddress: (String) -> Unit,
+    getUserInfoAddressState: UserInfoTextFieldState,
+    getProfileInfoCareer: String?,
+    setProfileInfoCareer: (String) -> Unit,
+    getUserInfoCareerState: UserInfoTextFieldState,
+    getProfileInfoKeywords: List<Keyword>?,
+    addProfileInfoKeywords: (Keyword) -> Unit,
+    removeProfileInfoKeyword: (Keyword) -> Unit,
+    getProfileInfoAnswersById: (Long) -> String,
+    setProfileInfoAnswers: (Long, String) -> Unit,
+    onDonePressed: () -> Unit
+) {
     val currentContentState = remember(contents.currentContentIndex) {
         contents.registerContentsState[contents.currentContentIndex]
     }
 
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val focusManager = LocalFocusManager.current
+
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.DarkBackground),
+            .background(Color.DarkBackground)
+            .noRippleClickable(
+                interactionSource = MutableInteractionSource(),
+                enabled = true,
+                onClick = {
+                    keyboardController?.hide()
+                    focusManager.clearFocus(true)
+                }
+            ),
         containerColor = Color.DarkBackground,
         topBar = {
             RegisterTopBar(
@@ -62,23 +101,40 @@ fun RegisterContentsScreen(contents: RegisterState.Contents, getProfileInfoName:
             ContentViewType.UserInfo -> {
                 UserInfoScreen(
                     modifier = Modifier.padding(top = paddingValues.calculateTopPadding()),
+                    setUserInfoState = setUserInfoState,
                     getProfileInfoName = getProfileInfoName,
                     setProfileInfoName = setProfileInfoName,
+                    getUserInfoNameState = getUserInfoNameState,
                     getProfileInfoGender = getProfileInfoGender,
                     setProfileInfoGender = setProfileInfoGender,
                     getProfileInfoBirth = getProfileInfoBirth,
                     setProfileInfoBirth = setProfileInfoBirth,
                     getProfileInfoAddress = getProfileInfoAddress,
                     setProfileInfoAddress = setProfileInfoAddress,
+                    getUserInfoAddressState = getUserInfoAddressState,
                     getProfileInfoCareer = getProfileInfoCareer,
-                    setProfileInfoCareer = setProfileInfoCareer
+                    setProfileInfoCareer = setProfileInfoCareer,
+                    getUserInfoCareerState = getUserInfoCareerState
                 )
             }
             ContentViewType.Picture -> {
                 PictureScreen(modifier = Modifier.padding(top = paddingValues.calculateTopPadding()))
             }
             ContentViewType.Keyword -> {
-                KeywordScreen(modifier = Modifier.padding(top = paddingValues.calculateTopPadding()))
+                KeywordScreen(
+                    modifier = Modifier.padding(top = paddingValues.calculateTopPadding()),
+                    keywordList = listOf(
+                        Keyword(1, "따듯한"),
+                        Keyword(2, "유머있는"),
+                        Keyword(3, "다정한"),
+                        Keyword(4, "편안한"),
+                        Keyword(5, "친절한"),
+                        Keyword(6, "몰라")
+                    ),
+                    getProfileInfoKeywords = getProfileInfoKeywords,
+                    addProfileInfoKeywords = addProfileInfoKeywords,
+                    removeProfileInfoKeyword = removeProfileInfoKeyword
+                )
             }
             ContentViewType.Questionnaire -> {
                 QuestionnaireScreen(
@@ -102,7 +158,9 @@ fun RegisterContentsScreen(contents: RegisterState.Contents, getProfileInfoName:
                             answer1 = "계획적인 게 좋아요",
                             answer2 = "즉흥적인 게 좋아요"
                         )
-                    )
+                    ),
+                    getProfileInfoAnswersById = getProfileInfoAnswersById,
+                    setProfileInfoAnswers = setProfileInfoAnswers
                 )
             }
         }

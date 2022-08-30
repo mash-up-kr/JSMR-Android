@@ -12,8 +12,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,13 +24,11 @@ import com.ui.theme.KoreaTypography
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun QuestionnaireScreen(modifier: Modifier = Modifier, questionnaireList: List<Questionnaire>) {
+fun QuestionnaireScreen(modifier: Modifier = Modifier, questionnaireList: List<Questionnaire>, getProfileInfoAnswersById: (Long) -> String, setProfileInfoAnswers: (Long, String) -> Unit) {
     Surface(
         color = Color.DarkBackground,
         modifier = modifier.padding(top = 40.dp, start = 32.dp, end = 32.dp)
     ) {
-        var selectedItemList by remember { mutableStateOf(listOf<String>("", "", "")) }
-
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
             contentPadding = PaddingValues(bottom = 148.dp),
@@ -51,10 +47,8 @@ fun QuestionnaireScreen(modifier: Modifier = Modifier, questionnaireList: List<Q
                     )
                     MarrytingRadioGroup(
                         items = listOf(questionnaire.answer1, questionnaire.answer2),
-                        selectedItem = selectedItemList[index],
-                        itemSelected = { item ->
-                            selectedItemList = selectedItemList.toMutableList().also { it[index] = item }
-                        }
+                        selectedItem = getProfileInfoAnswersById(questionnaire.questionId),
+                        itemSelected = { setProfileInfoAnswers(index + 1L, it) }
                     )
                 }
             }
