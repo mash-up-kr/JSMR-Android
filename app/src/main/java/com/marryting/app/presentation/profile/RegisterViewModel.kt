@@ -68,7 +68,7 @@ class RegisterViewModel @Inject constructor(
 
     private fun setUserInfoStateByCondition(conditionLength: Int, currentLength: Int, type: String) {
         viewModelScope.launch {
-            if (currentLength >= conditionLength) {
+            if (currentLength > conditionLength) {
                 setUserInfoState(type, UserInfoTextFieldState.Error())
             } else {
                 setUserInfoState(type, UserInfoTextFieldState.Active())

@@ -86,7 +86,7 @@ fun MarrytingTextField(modifier: Modifier = Modifier, setUserInfoState: (String,
         if (state == UserInfoTextFieldState.Error()) {
             Text(
                 modifier = Modifier.padding(top = 4.dp, start = 20.dp, end = 20.dp),
-                text = "error message",
+                text = state.message,
                 style = KoreaTypography.caption,
                 color = state.color
             )
