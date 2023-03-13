@@ -32,7 +32,7 @@ moshi = "1.8.0"
 googlePermissions = "0.24.13-rc"
 googlePager = "0.22.0-rc"
 imageCropper = "4.3.1"
-lottie = "5.2.0"
+lottie = "6.0.0"
 
 
 [libraries]
